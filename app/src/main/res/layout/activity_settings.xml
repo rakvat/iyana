@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_title"
+        android:id="@+id/settingsTextView" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_explain" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <EditText android:id="@+id/factor0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor1"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor2"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor3"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor3"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor4"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor6"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor7"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor8"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:nextFocusDown="@+id/factor9"
+                android:imeOptions="actionNext"
+                android:hint="@string/settings_factor_hint" />
+            <EditText android:id="@+id/factor9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/settings_factor_hint" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_save" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
