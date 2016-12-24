@@ -1,7 +1,9 @@
 package com.example.rakvat.iyana;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

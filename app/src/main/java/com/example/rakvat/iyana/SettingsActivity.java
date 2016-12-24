@@ -32,12 +32,13 @@ public class SettingsActivity extends AppCompatActivity {
             String message = editText.getText().toString();
             if (message.length() > 0) {
                 editor.putString(getString(R.string.factor_storage_key) + i, message);
-                //editor.putString(getString(R.string.factor_storage_key), message);
-                //editor.commit();
             }
         }
         editor.commit();
-        Toast toast = Toast.makeText(this, "saved", Toast.LENGTH_SHORT);
+
+        // TODO: check if table columns changed, if yes, delete previous data
+
+        Toast toast = Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_SHORT);
         toast.show();
     }
 }
