@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.enter_data:
+                enterData();
+                return true;
             case R.id.settings:
                 showSettings();
                 return true;
@@ -38,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void enterData() {
+        Intent intent = new Intent(this, EnterDataActivity.class);
+        startActivity(intent);
     }
 
     private void showSettings() {

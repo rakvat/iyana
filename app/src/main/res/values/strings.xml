@@ -13,4 +13,7 @@
     <string name="settings_explain">You can select up to 10 factors that you want to track every day. You should chose factors that you think might have an influence on your mood or be influecned by your mood. The factors should be trackable by entering values 1 (bad) to 5 (good). Examples are weather, sleep, sports, food, completed daily plan, meditation.</string>
     <string name="settings_save">Save</string>
     <string name="settings_factor_hint">enter factor title</string>
+    <string name="factor_storage_key">com.example.rakvat.IYANA.FACTOR_STORAGE_KEY</string>
+    <string name="enter_data_title">Enter Data</string>
+    <string name="enter_data">enter data</string>
 </resources>

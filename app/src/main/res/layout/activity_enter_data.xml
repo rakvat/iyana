@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_data_title" />
+
+
+    <TextView android:id="@+id/data_label0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText android:id="@+id/data0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:nextFocusDown="@+id/data1"
+        android:imeOptions="actionNext"
+        android:hint="@string/enter_data" />
+
+    <TextView android:id="@+id/data_label9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText android:id="@+id/data9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:nextFocusDown="@+id/data1"
+        android:imeOptions="actionNext"
+        android:hint="@string/enter_data" />
+</LinearLayout>
