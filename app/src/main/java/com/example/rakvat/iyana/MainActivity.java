@@ -39,9 +39,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.help:
                 showHelp();
                 return true;
+            case R.id.time_charts:
+                showTimeCharts();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showTimeCharts() {
+        Intent intent = new Intent(this, TimeChartActivity.class);
+        startActivity(intent);
     }
 
     private void enterData() {

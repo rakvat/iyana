@@ -6,9 +6,9 @@
         android:title="@string/nav_enter_data" />
     <item android:id="@+id/settings"
         android:title="@string/nav_settings" />
-    <item android:id="@+id/time_graphs"
+    <item android:id="@+id/time_charts"
         android:title="@string/nav_time_graphs" />
-    <item android:id="@+id/mood_graphs"
+    <item android:id="@+id/mood_charts"
         android:title="@string/nav_mood_graphs" />
     <item android:id="@+id/help"
         android:title="@string/nav_help" />
