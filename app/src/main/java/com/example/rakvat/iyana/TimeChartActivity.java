@@ -9,18 +9,17 @@ import android.os.Bundle;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.data;
-import static android.R.attr.enabled;
-import static android.R.transition.move;
-import static com.example.rakvat.iyana.R.id.factor0;
 
 public class TimeChartActivity extends AppCompatActivity {
 
@@ -83,7 +82,7 @@ public class TimeChartActivity extends AppCompatActivity {
         List<Entry> entries2 = new ArrayList<Entry>();
         List<Entry> entries3 = new ArrayList<Entry>();
 
-        int i = 0;
+        long timeReference = 0;
         while(cursor.moveToNext()) {
             long itemId = cursor.getLong(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry._ID));
@@ -91,30 +90,41 @@ public class TimeChartActivity extends AppCompatActivity {
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
             int factor0 = cursor.getInt(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR0));
-            entries.add(new Entry(i, itemId));
-            entries2.add(new Entry(i, mood));
-            entries3.add(new Entry(i, factor0));
-            i++;
+            long timestamp = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
+            if(timeReference == 0) {
+                timeReference = timestamp;
+            }
+            long t = timestamp - timeReference;
+            entries.add(new Entry(t, itemId));
+            entries2.add(new Entry(t, mood));
+            entries3.add(new Entry(t, factor0));
         }
         cursor.close();
 
         LineDataSet dataSet = new LineDataSet(entries, "Test red"); // add entries to dataset
         dataSet.setColor(Color.rgb(255, 0, 0    ));
-        //dataSet.setValueTextColor(...); // styling, ...
         LineDataSet dataSet2 = new LineDataSet(entries2, "Test green"); // add entries to dataset
         dataSet2.setColor(Color.rgb(0, 255, 0));
         LineDataSet dataSet3 = new LineDataSet(entries3, "Test blue"); // add entries to dataset
         dataSet3.setColor(Color.rgb(0, 0, 255));
+        //dataSet.setValueTextColor(...); // styling, ...
 
         List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(dataSet);
         dataSets.add(dataSet2);
         dataSets.add(dataSet3);
-
         LineData data = new LineData(dataSets);
 
         chart.setData(data);
 
+        // style
+        IAxisValueFormatter xAxisFormatter = new HourAxisValueFormatter(timeReference);
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(xAxisFormatter);
+
+        //MyMarkerView myMarkerView= new MyMarkerView(getApplicationContext(), R.layout.my_marker_view_layout, timeReference);
+        //chart.setMarkerView(myMarkerView);
 
         chart.invalidate(); // refresh
     }
