@@ -9,18 +9,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.R.attr.x;
+
 
 // from https://github.com/PhilJay/MPAndroidChart/issues/789
-public class HourAxisValueFormatter implements IAxisValueFormatter
+public class DateAxisValueFormatter implements IAxisValueFormatter
 {
 
+    private static final float DAY_HOUR_THRESHOLD = 60 * 60 * 24; // 1 day
+
     private long referenceTimestamp; // minimum timestamp in your data set
-    private DateFormat mDataFormat;
+    private DateFormat mDayFormat;
+    private DateFormat mHourFormat;
     private Date mDate;
 
-    public HourAxisValueFormatter(long referenceTimestamp) {
+    public DateAxisValueFormatter(long referenceTimestamp) {
         this.referenceTimestamp = referenceTimestamp;
-        this.mDataFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+        this.mHourFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+        this.mDayFormat = new SimpleDateFormat("MM/dd", Locale.ENGLISH);
         this.mDate = new Date();
     }
 
@@ -42,8 +48,11 @@ public class HourAxisValueFormatter implements IAxisValueFormatter
         // Retrieve original timestamp
         long originalTimestamp = referenceTimestamp + convertedTimestamp;
 
-        // Convert timestamp to hour:minute
-        return getHour(originalTimestamp);
+        if (axis.getAxisMaximum() - axis.getAxisMinimum() > DAY_HOUR_THRESHOLD) {
+            return getDay(originalTimestamp);
+        } else {
+            return getHour(originalTimestamp);
+        }
     }
 
     //@Override
@@ -53,8 +62,18 @@ public class HourAxisValueFormatter implements IAxisValueFormatter
 
     private String getHour(long timestamp){
         try{
-            mDate.setTime(timestamp*1000);
-            return mDataFormat.format(mDate);
+            mDate.setTime(timestamp);
+            return mHourFormat.format(mDate);
+        }
+        catch(Exception ex){
+            return "xx";
+        }
+    }
+
+    private String getDay(long timestamp){
+        try{
+            mDate.setTime(timestamp);
+            return mDayFormat.format(mDate);
         }
         catch(Exception ex){
             return "xx";
