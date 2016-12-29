@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -16,6 +17,8 @@ import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.data;
 
 
 public class TimeChartActivity extends AppCompatActivity {
@@ -37,7 +40,22 @@ public class TimeChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_chart);
+        initializeChart();
+    }
 
+    private void initializeChart() {
+        Cursor cursor = getDBData();
+        ScatterChart chart = (ScatterChart) findViewById(R.id.time_chart);
+        List<String> titles = FactorTitleHelper.getFactorTitles(this);
+        List<Entry> moodEntries = new ArrayList<Entry>();
+        List<List<Entry>> entries = new ArrayList<List<Entry>>();
+        long timeReference = populateEntries(cursor, titles, moodEntries, entries);
+        setScatterData(chart, titles, moodEntries, entries);
+        styleChart(chart, timeReference);
+        chart.invalidate(); // refresh
+    }
+    
+    private Cursor getDBData() {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -73,11 +91,10 @@ public class TimeChartActivity extends AppCompatActivity {
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+        return cursor;
+    }
 
-        ScatterChart chart = (ScatterChart) findViewById(R.id.time_chart);
-        List<String> titles = FactorTitleHelper.getFactorTitles(this);
-        List<Entry> moodEntries = new ArrayList<Entry>();
-        List<List<Entry>> entries = new ArrayList<List<Entry>>();
+    private long populateEntries(Cursor cursor, List<String> titles, List<Entry> moodEntries, List<List<Entry>> entries) {
         for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
             List<Entry> factor_entries = new ArrayList<Entry>();
             entries.add(factor_entries);
@@ -104,7 +121,10 @@ public class TimeChartActivity extends AppCompatActivity {
             }
         }
         cursor.close();
+        return timeReference;
+    }
 
+    private void setScatterData(Chart chart, List<String> titles, List<Entry> moodEntries, List<List<Entry>> entries) {
         List<IScatterDataSet> dataSets = new ArrayList<IScatterDataSet>();
         ScatterDataSet dataSet = new ScatterDataSet(moodEntries, "Mood");
         dataSet.setColor(Color.rgb(0, 0, 0));
@@ -118,10 +138,11 @@ public class TimeChartActivity extends AppCompatActivity {
                 dataSets.add(factorDataSet);
             }
         }
-
         ScatterData data = new ScatterData(dataSets);
         chart.setData(data);
+    }
 
+    private void styleChart(Chart chart, long timeReference) {
         // style
         IAxisValueFormatter xAxisFormatter = new HourAxisValueFormatter(timeReference);
         XAxis xAxis = chart.getXAxis();
@@ -129,7 +150,5 @@ public class TimeChartActivity extends AppCompatActivity {
 
         //MyMarkerView myMarkerView= new MyMarkerView(getApplicationContext(), R.layout.my_marker_view_layout, timeReference);
         //chart.setMarkerView(myMarkerView);
-
-        chart.invalidate(); // refresh
     }
 }
