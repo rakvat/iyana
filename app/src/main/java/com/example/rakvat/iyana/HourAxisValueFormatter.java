@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
+// from https://github.com/PhilJay/MPAndroidChart/issues/789
 public class HourAxisValueFormatter implements IAxisValueFormatter
 {
 

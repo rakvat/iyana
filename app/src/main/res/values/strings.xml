@@ -24,4 +24,5 @@
     <string name="enter_data_mood">mood (1-5)</string>
     <string name="enter_data_mood_label">Your current Mood:</string>
     <string name="enter_data_hint">All values should be from 1 (very bad) to 5 (very good).</string>
+    <string name="time_chart_explain">You can pan and scale the chart.</string>
 </resources>

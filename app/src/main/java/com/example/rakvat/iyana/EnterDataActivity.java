@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.List;
 
 import static android.R.attr.value;
 import static android.R.id.message;
@@ -32,14 +33,11 @@ public class EnterDataActivity extends AppCompatActivity {
                            R.id.data_label4, R.id.data_label5,
                            R.id.data_label6, R.id.data_label7,
                            R.id.data_label8, R.id.data_label9 };
-        SharedPreferences sharedPref =
-                this.getSharedPreferences(getString(R.string.factor_storage_key),
-                        Context.MODE_PRIVATE);
-        for (int i = 0; i < view_ids.length; i++) {
-            String factor_title = sharedPref.getString(getString(R.string.factor_storage_key) + i, "");
-            if (factor_title.length() > 0) {
+        List<String> titles = FactorTitleHelper.getFactorTitles(this);
+        for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+           if (titles.get(i).length() > 0) {
                 TextView textView = (TextView) findViewById(view_ids[i]);
-                textView.setText(factor_title + ":");
+                textView.setText(titles.get(i) + ":");
             }
         }
     }
@@ -70,6 +68,7 @@ public class EnterDataActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT);
         toast.show();
+        finish();
     }
 
     private void storeValueFrom(int view_id, String dbColumn, ContentValues values) {
