@@ -7,12 +7,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:text="@string/enter_data_title" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/enter_data_hint" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,153 +19,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/enter_data_list"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/enter_data_mood_label"/>
-
-            <EditText android:id="@+id/data_mood"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data0"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data_mood" />
-
-
-            <TextView android:id="@+id/data_label0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data1"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data2"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data3"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-
-            <TextView android:id="@+id/data_label3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data4"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data5"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data6"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data7"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data8"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data9"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
-
-            <TextView android:id="@+id/data_label9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText android:id="@+id/data9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:nextFocusDown="@+id/data_note"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_data" />
+                android:layout_height="match_parent">
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enter_data_note_label"/>
 
-
             <EditText android:id="@+id/data_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="@string/enter_data_note" />
-
 
             <Button
                 android:layout_width="wrap_content"

@@ -10,7 +10,7 @@
     <string name="nav_welcome">Dashboard</string>
     <string name="help">Here to help</string>
     <string name="settings_title">Settings</string>
-    <string name="settings_explain">You can select up to 10 factors that you want to track every day. You should chose factors that you think might have an influence on your mood or be influecned by your mood. The factors should be trackable by entering values 1 (bad) to 5 (good). Examples are weather, sleep, sports, food, completed daily plan, meditation.</string>
+    <string name="settings_explain">You can select up to 10 factors that you want to track every day. You should chose factors that you think might have an influence on your mood or be influenced by your mood. The factors should be trackable by entering values 1 (bad) to 5 (good). Examples are weather, sleep, sports, food, completed daily plan, meditation.</string>
     <string name="settings_save">Save</string>
     <string name="settings_factor_hint">enter factor title</string>
     <string name="factor_storage_key">com.example.rakvat.IYANA.FACTOR_STORAGE_KEY</string>
@@ -21,8 +21,6 @@
     <string name="data_saved">saved</string>
     <string name="enter_data_note_label">Note (e.g. special events that influenced your mood)</string>
     <string name="enter_data_note">Note</string>
-    <string name="enter_data_mood">mood (1-5)</string>
-    <string name="enter_data_mood_label">Your current Mood:</string>
-    <string name="enter_data_hint">All values should be from 1 (very bad) to 5 (very good).</string>
+    <string name="enter_data_mood_label">Mood</string>
     <string name="time_chart_explain">You can pan and scale the chart.</string>
 </resources>
