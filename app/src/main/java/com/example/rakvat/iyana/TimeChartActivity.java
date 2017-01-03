@@ -10,6 +10,7 @@ import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -20,7 +21,9 @@ import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TimeChartActivity extends AppCompatActivity {
@@ -38,10 +41,10 @@ public class TimeChartActivity extends AppCompatActivity {
             Color.rgb(200, 200, 200),
     };
     private static final int MAX_X_RANGE = 1000 * 60 * 60 * 24 * 7; // 7 days
-    private static final int X_OFFSET = 1000 * 60 * 60 * 24 * 2;
     private static final float MARKER_OFFSET = 0.1f;
 
     private List<Integer> mValueCounter;
+    private Map<Integer, String> mDate2NotesMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +109,7 @@ public class TimeChartActivity extends AppCompatActivity {
             List<Entry> factor_entries = new ArrayList<Entry>();
             entries.add(factor_entries);
         }
-
+        mDate2NotesMap = new HashMap<Integer, String>();
         long timeReference = 0;
         while(cursor.moveToNext()) {
             long timestamp = cursor.getLong(
@@ -115,6 +118,11 @@ public class TimeChartActivity extends AppCompatActivity {
                 timeReference = timestamp;
             }
             long t = timestamp - timeReference;
+            String note = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_NOTE));
+            if (note != null) {
+                mDate2NotesMap.put((int)(t/1000), note);
+            }
             int value = cursor.getInt(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
             mValueCounter = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
@@ -192,9 +200,12 @@ public class TimeChartActivity extends AppCompatActivity {
         legend.setWordWrapEnabled(true);
 
         chart.setVisibleXRangeMaximum(MAX_X_RANGE);
-        chart.moveViewToX(new Date().getTime() - timeReference - MAX_X_RANGE + X_OFFSET);
+        chart.moveViewToX(new Date().getTime() - timeReference - MAX_X_RANGE);
 
-        //MyMarkerView myMarkerView= new MyMarkerView(getApplicationContext(), R.layout.my_marker_view_layout, timeReference);
-        //chart.setMarkerView(myMarkerView);
+        chart.setScaleYEnabled(false);
+        chart.setDoubleTapToZoomEnabled(false);
+
+        NoteMarkerView markerView = new NoteMarkerView(this, R.layout.note_marker_view, mDate2NotesMap);
+        chart.setMarker(markerView);
     }
 }
