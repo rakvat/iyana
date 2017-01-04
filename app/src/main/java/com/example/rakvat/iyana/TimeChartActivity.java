@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.ScatterChart;
@@ -24,6 +25,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.rakvat.iyana.R.string.app_name;
 
 public class TimeChartActivity extends AppCompatActivity {
 
@@ -50,6 +53,8 @@ public class TimeChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_chart);
+        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
+        Util.setTitleBar(this, R.string.nav_time_graphs);
         initializeChart();
     }
 
