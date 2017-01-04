@@ -2,18 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="40dp"
+    android:background="@drawable/marker_image"
  >
 
     <TextView
         android:id="@+id/tvContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="100px"
         android:layout_centerHorizontal="true"
-        android:text="bmmnbmnbmnbmnbmnbmnbmnbmnbmnbmnbmnb"
+        android:text=""
         android:textSize="12dp"
         android:textColor="@android:color/black"
-        android:background="@drawable/marker_image"
-        android:maxLines="5"
+        android:maxLines="4"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
