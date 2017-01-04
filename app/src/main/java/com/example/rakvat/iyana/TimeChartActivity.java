@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class TimeChartActivity extends AppCompatActivity {
 
     public static final int[] COLORS = {
@@ -42,6 +41,7 @@ public class TimeChartActivity extends AppCompatActivity {
     };
     private static final int MAX_X_RANGE = 1000 * 60 * 60 * 24 * 7; // 7 days
     private static final float MARKER_OFFSET = 0.1f;
+    private static final int X_OFFSET = 1000 * 60 * 60 * 6;
 
     private List<Integer> mValueCounter;
     private Map<Integer, String> mDate2NotesMap;
@@ -111,13 +111,14 @@ public class TimeChartActivity extends AppCompatActivity {
         }
         mDate2NotesMap = new HashMap<Integer, String>();
         long timeReference = 0;
+        long t = 0;
         while(cursor.moveToNext()) {
             long timestamp = cursor.getLong(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
             if(timeReference == 0) {
                 timeReference = timestamp;
             }
-            long t = timestamp - timeReference;
+            t = timestamp - timeReference;
             String note = cursor.getString(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_NOTE));
             if (note != null) {
@@ -140,6 +141,8 @@ public class TimeChartActivity extends AppCompatActivity {
             }
         }
         cursor.close();
+        // additional point to force the chart to include the full circle of the last data point
+        moodEntries.add(new Entry(t + X_OFFSET, -5));
         return timeReference;
     }
 
