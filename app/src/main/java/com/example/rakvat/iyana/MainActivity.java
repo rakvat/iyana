@@ -1,6 +1,7 @@
 package com.example.rakvat.iyana;
 
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,12 +42,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.help:
                 showHelp();
                 return true;
+            case R.id.about:
+                showAbout();
+                return true;
             case R.id.time_charts:
                 showTimeCharts();
+                return true;
+            case R.id.mood_charts:
+                showMoodCharts();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showMoodCharts() {
+        Intent intent = new Intent(this, MoodChartActivity.class);
+        startActivity(intent);
     }
 
     private void showTimeCharts() {
@@ -66,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void showHelp() {
         Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+    }
+
+    private void showAbout() {
+        Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_back"
+        android:icon="@drawable/back"
+        android:title="@string/nav_back"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_help"
+        android:icon="@drawable/help"
+        android:title="@string/nav_help"
+        app:showAsAction="ifRoom"/>
+</menu>

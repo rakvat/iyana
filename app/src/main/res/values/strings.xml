@@ -23,4 +23,7 @@
     <string name="enter_data_note">Note</string>
     <string name="enter_data_mood_label">Mood</string>
     <string name="time_chart_explain">You can pan and scale the chart.</string>
+    <string name="nav_back">Back</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="about">About this app</string>
 </resources>
