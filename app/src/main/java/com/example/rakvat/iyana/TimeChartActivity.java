@@ -3,6 +3,7 @@ package com.example.rakvat.iyana;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +75,10 @@ public class TimeChartActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_back:
                 finish();
+                return true;
+            case R.id.action_help:
+                DialogFragment helpDialog = HelpDialog.newInstance(R.string.time_chart_help);
+                helpDialog.show(getSupportFragmentManager(), "help");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

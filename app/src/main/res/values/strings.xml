@@ -10,20 +10,48 @@
     <string name="nav_welcome">Dashboard</string>
     <string name="help">Here to help</string>
     <string name="settings_title">Settings</string>
-    <string name="settings_explain">You can select up to 10 factors that you want to track every day. You should chose factors that you think might have an influence on your mood or be influenced by your mood. The factors should be trackable by entering values 1 (bad) to 5 (good). Examples are weather, sleep, sports, food, completed daily plan, meditation.</string>
+    <string name="settings_help">You can select up to 10 factors that you want to track every day.
+        You should choose factors that you think might have an influence on your mood or be influenced by your mood.\n
+        \n
+        The factors should be trackable by entering values from good to bad (++, +, +-, -, --).\n
+        \n
+        Examples are weather, sleep, sports, food, completed daily plan, meditation. You could also
+        add menstruation if you think it might have an influence on your mood. In that case you could
+        skip that question most of the days and only answer it when you get your period.
+    </string>
     <string name="settings_save">Save</string>
     <string name="settings_factor_hint">enter factor title</string>
     <string name="factor_storage_key">com.example.rakvat.IYANA.FACTOR_STORAGE_KEY</string>
     <string name="enter_data_title">Enter Data</string>
-    <string name="enter_data">enter data (1-5)</string>
+    <string name="enter_data_help">Here you can enter your current mood and the other factors you wanted to track.
+        You can add more factors or change them by going to Settings.\n
+        \n
+        ++ means very good\n
+        + means good\n
+        +- means neutral, neither good nor bad\n
+        - means bad\n
+        -- means very bad\n
+        \n
+        You do not have to answer every row each time.\n
+        \n
+        It might help to write down some notes with your definition for ++, +, +-, -, -- for mood and other factors. That way your answers can get more consistant.
+    </string>
     <string name="enter_data_save">save</string>
     <string name="settings_saved">saved</string>
     <string name="data_saved">saved</string>
     <string name="enter_data_note_label">Note (e.g. special events that influenced your mood)</string>
     <string name="enter_data_note">Note</string>
     <string name="enter_data_mood_label">Mood</string>
-    <string name="time_chart_explain">You can pan and scale the chart.</string>
+    <string name="time_chart_help">This chart shows your mood over time. It also shows the additional factors you are tracking.
+        This allows you to watch mood changes over time and understand possible causes of mood changes by looking at patterns.
+        Maybe you are in a bad mood one day after eating bad or one week before menstruation?\n
+        \n
+        Once you have collected more than one week of data, you can move through the time by touching the chart and moving in horizontal direction.\n
+        \n
+        You can read the notes you have taken when entering data by touching data points in the graph.
+    </string>
     <string name="nav_back">Back</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="about">About this app</string>
+    <string name="help_ok">Ok</string>
 </resources>

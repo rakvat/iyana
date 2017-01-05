@@ -14,11 +14,6 @@
         android:titleTextColor="@color/colorAccent"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/time_chart_explain" />
-
     <com.github.mikephil.charting.charts.ScatterChart
         android:id="@+id/time_chart"
         android:layout_width="match_parent"
