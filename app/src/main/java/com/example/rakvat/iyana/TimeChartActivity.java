@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.rakvat.iyana.R.string.app_name;
+import static com.example.rakvat.iyana.Util.getDBData;
 
 public class TimeChartActivity extends AppCompatActivity {
 
@@ -86,7 +87,7 @@ public class TimeChartActivity extends AppCompatActivity {
     }
 
     private void initializeChart() {
-        Cursor cursor = getDBData();
+        Cursor cursor = Util.getDBData(this);
         ScatterChart chart = (ScatterChart) findViewById(R.id.time_chart);
         List<String> titles = FactorTitleHelper.getFactorTitles(this);
         List<Entry> moodEntries = new ArrayList<Entry>();
@@ -97,44 +98,7 @@ public class TimeChartActivity extends AppCompatActivity {
         chart.invalidate(); // refresh
     }
 
-    private Cursor getDBData() {
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                DatabaseContract.MoodEntry._ID,
-                DatabaseContract.MoodEntry.COLUMN_NAME_DATE,
-                DatabaseContract.MoodEntry.COLUMN_NAME_MOOD,
-                DatabaseContract.MoodEntry.COLUMN_NAME_NOTE,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR0,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR1,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR2,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR3,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR4,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR5,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR6,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR7,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR8,
-                DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR9
-        };
-
-        String selection = "";
-        String[] selectionArgs = {};
-        String sortOrder =
-                DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " ASC";
-        Cursor cursor = db.query(
-                DatabaseContract.MoodEntry.TABLE_NAME,    // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
-        return cursor;
-    }
 
     private long populateEntries(Cursor cursor, List<String> titles, List<Entry> moodEntries, List<List<Entry>> entries) {
         for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
