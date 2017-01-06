@@ -19,18 +19,25 @@ import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
-import static android.R.attr.value;
-import static com.example.rakvat.iyana.TimeChartActivity.COLORS;
-import static com.example.rakvat.iyana.Util.getDBData;
+
 
 public class ChartFragment extends Fragment {
 
     ViewGroup mRootView;
+
+
+    // newInstance constructor for creating fragment with arguments
+    public static ChartFragment newInstance(int page, String title) {
+        ChartFragment fragmentFirst = new ChartFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        // TODO: args.putIntegerArrayList();
+        fragmentFirst.setArguments(args);
+        return fragmentFirst;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +83,7 @@ public class ChartFragment extends Fragment {
 
     private void styleDataSet(ScatterDataSet dataSet, int color, ScatterChart.ScatterShape shape) {
         dataSet.setColor(color);
+        //dataSet.setColors(); // TODO: does that help? we can have multiple colors?
         dataSet.setDrawValues(false);
         dataSet.setScatterShapeSize(20);
         dataSet.setScatterShape(shape);
