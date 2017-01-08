@@ -25,16 +25,19 @@ import java.util.List;
 
 public class ChartFragment extends Fragment {
 
+    private static final float MARKER_OFFSET = 0.1f;
+
     ViewGroup mRootView;
 
 
     // newInstance constructor for creating fragment with arguments
-    public static ChartFragment newInstance(int page, String title) {
+    public static ChartFragment newInstance(List<ArrayList<Integer>> numbers, String title) {
         ChartFragment fragmentFirst = new ChartFragment();
         Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        // TODO: args.putIntegerArrayList();
+        args.putString("title", title);
+        args.putIntegerArrayList("xValues", numbers.get(0));
+        args.putIntegerArrayList("yValues", numbers.get(1));
+        args.putIntegerArrayList("timeValues", numbers.get(2));
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
@@ -44,49 +47,68 @@ public class ChartFragment extends Fragment {
                              Bundle savedInstanceState) {
         mRootView = (ViewGroup) inflater.inflate(
                 R.layout.chart_fragment, container, false);
-        initializeChart();
+
+        String title = (String)getArguments().get("title");
+        ArrayList<Integer> xValues = getArguments().getIntegerArrayList("xValues");
+        ArrayList<Integer> yValues = getArguments().getIntegerArrayList("yValues");
+        ArrayList<Integer> timeValues = getArguments().getIntegerArrayList("timeValues");
+
+        initializeChart(title, xValues, yValues, timeValues);
         return mRootView;
     }
 
-    private void initializeChart() {
-        Cursor cursor = Util.getDBData(getActivity());
+    private void initializeChart(String title,
+                                 ArrayList<Integer> xValues,
+                                 ArrayList<Integer> yValues,
+                                 ArrayList<Integer> timeValues) {
+
         ScatterChart chart = (ScatterChart) mRootView.findViewById(R.id.mood_chart);
         List<Entry> entries = new ArrayList<Entry>();
-        populateEntries(cursor, entries);
-        setScatterData(chart, entries);
+        timeValues = populateEntries(entries, xValues, yValues, timeValues);
+        setScatterData(chart, entries, timeValues, title);
         styleChart(chart);
         chart.invalidate(); // refresh
     }
 
 
-    private void populateEntries(Cursor cursor, List<Entry> entries) {
-        while(cursor.moveToNext()) {
-            int moodValue = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
-            int factor0Value = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_FACTOR0));
-            entries.add(new Entry(moodValue, factor0Value));
+
+
+    private ArrayList<Integer> populateEntries(List<Entry> entries,
+                                 ArrayList<Integer> xValues,
+                                 ArrayList<Integer> yValues,
+                                 ArrayList<Integer> timeValues
+                                 ) {
+        // TODO: check for multiple values on same spot, use offset
+        ArrayList<Integer> modifiedTimeValues = new ArrayList<Integer>();
+        for(int i = 0; i < xValues.size(); i++) {
+            //check if factor values are 0, skip those
+            if(yValues.get(i) != 0){
+                modifiedTimeValues.add(timeValues.get(i));
+                entries.add(new Entry(xValues.get(i), yValues.get(i)));
+            }
         }
-        cursor.close();
+        return modifiedTimeValues;
     }
 
-    private void setScatterData(Chart chart, List<Entry> entries) {
+    private void setScatterData(Chart chart, List<Entry> entries, ArrayList<Integer> timeValues, String title) {
         List<IScatterDataSet> dataSets = new ArrayList<IScatterDataSet>();
 
-        ScatterDataSet dataSet = new ScatterDataSet(entries, "Factor0");
-        styleDataSet(dataSet, Color.rgb(0, 0, 0), ScatterChart.ScatterShape.SQUARE);
+        ScatterDataSet dataSet = new ScatterDataSet(entries, title);
+        // TODO change color to color of factor
+        styleDataSet(dataSet, Color.rgb(0, 0, 0), timeValues);
         dataSets.add(dataSet);
 
         ScatterData data = new ScatterData(dataSets);
         chart.setData(data);
     }
 
-    private void styleDataSet(ScatterDataSet dataSet, int color, ScatterChart.ScatterShape shape) {
-        dataSet.setColor(color);
+    private void styleDataSet(ScatterDataSet dataSet, int color, ArrayList<Integer> timeValues) {
+       dataSet.setColors(color);
         //dataSet.setColors(); // TODO: does that help? we can have multiple colors?
+        // use timeValues for that
         dataSet.setDrawValues(false);
         dataSet.setScatterShapeSize(20);
-        dataSet.setScatterShape(shape);
+        dataSet.setScatterShape(ScatterChart.ScatterShape.SQUARE);
     }
 
     private void styleChart(ScatterChart chart) {

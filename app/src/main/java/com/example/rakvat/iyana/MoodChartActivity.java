@@ -1,5 +1,6 @@
 package com.example.rakvat.iyana;
 
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -12,12 +13,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
 public class MoodChartActivity extends AppCompatActivity {
 
 
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
+    // The number of pages (wizard steps) to show in this demo.
     private static final int NUM_PAGES = 10;
 
     /**
@@ -30,6 +34,11 @@ public class MoodChartActivity extends AppCompatActivity {
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
+
+    protected List<String> mTitles;
+    protected ArrayList<Integer> mMoodValues;
+    protected ArrayList<Integer> mTimeValues;
+    protected ArrayList<ArrayList<Integer>> mFactorValues;
 
 
     @Override
@@ -44,6 +53,46 @@ public class MoodChartActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.mood_chart_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+        initializeData();
+    }
+
+    private void initializeData() {
+        mTitles = FactorTitleHelper.getFactorTitles(this);
+        Cursor cursor = Util.getDBData(this);
+        mMoodValues = new ArrayList<Integer>();
+        mTimeValues = new ArrayList<Integer>();
+        mFactorValues = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+            mFactorValues.add(new ArrayList<Integer>());
+        }
+
+
+
+        long timeReference = 0;
+        long now = 0;
+        long t = 0;
+        while(cursor.moveToNext()) {
+            long timestamp = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
+            if(timeReference == 0) {
+                timeReference = timestamp;
+                now = new Date().getTime() - timeReference;
+            }
+            t = timestamp - timeReference;
+            int value = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
+            mMoodValues.add(value);
+            mTimeValues.add((int)((1 - ((now - t)/(now - timeReference))) * 255));
+            for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+                if (mTitles.get(i) != null) {
+                    value = cursor.getInt(
+                            cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.FACTOR_COLUMNS[i]));
+                    mFactorValues.get(i).add(value);
+                }
+            }
+        }
+        cursor.close();
     }
 
     @Override
@@ -79,9 +128,6 @@ public class MoodChartActivity extends AppCompatActivity {
     }
 
 
-
-
-
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -93,7 +139,12 @@ public class MoodChartActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new ChartFragment();
+            String title = mTitles.get(position);
+            List<ArrayList<Integer>> values = new ArrayList<ArrayList<Integer>>();
+            values.add(mMoodValues);
+            values.add(mFactorValues.get(position));
+            values.add(mTimeValues);
+            return ChartFragment.newInstance(values, title);
         }
 
         @Override

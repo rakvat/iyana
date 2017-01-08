@@ -199,7 +199,7 @@ public class TimeChartActivity extends AppCompatActivity {
         legend.setWordWrapEnabled(true);
 
         chart.setVisibleXRangeMaximum(MAX_X_RANGE);
-        chart.moveViewToX(new Date().getTime() - timeReference - MAX_X_RANGE);
+        chart.moveViewToX(new Date().getTime() + X_OFFSET - timeReference - MAX_X_RANGE);
 
         chart.setScaleYEnabled(false);
         chart.setDoubleTapToZoomEnabled(false);
