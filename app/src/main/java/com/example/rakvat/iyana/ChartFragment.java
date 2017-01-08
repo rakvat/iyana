@@ -21,6 +21,7 @@ import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.factor;
 
 
 public class ChartFragment extends Fragment {
@@ -102,9 +103,15 @@ public class ChartFragment extends Fragment {
     }
 
     private void styleDataSet(ScatterDataSet dataSet) {
-        dataSet.setColor(mColor);
-        //dataSet.setColors(); // TODO: does that help? we can have multiple colors?
-        // use mTimeValues for that
+        int[] colors = new int[mTimeValues.size()];
+        for (int i = 0; i < mTimeValues.size(); i++) {
+            int f = mTimeValues.get(i);
+            colors[i] = Color.argb(f,
+                                   Color.red(mColor),
+                                   Color.green(mColor),
+                                   Color.blue(mColor));
+        }
+        dataSet.setColors(colors);
         dataSet.setDrawValues(false);
         dataSet.setScatterShapeSize(20);
         dataSet.setScatterShape(ScatterChart.ScatterShape.SQUARE);
@@ -130,11 +137,10 @@ public class ChartFragment extends Fragment {
 
         // Hide the description
         Description d = new Description();
-        d.setText("");
+        d.setText(Util.capitalize(mTitle));
         chart.setDescription(d);
 
-        Legend legend = chart.getLegend();
-        legend.setWordWrapEnabled(true);
+        chart.getLegend().setEnabled(false);
 
         chart.setScaleYEnabled(false);
         chart.setDoubleTapToZoomEnabled(false);

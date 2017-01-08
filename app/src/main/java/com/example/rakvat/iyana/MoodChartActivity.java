@@ -83,7 +83,7 @@ public class MoodChartActivity extends AppCompatActivity {
             int value = cursor.getInt(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
             mMoodValues.add(value);
-            mTimeValues.add((int)((1 - ((now - t)/(now - timeReference))) * 255));
+            mTimeValues.add((int)((1 - ((now - t)/(float)now)) * 255));
             for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
                 if (mTitles.get(i) != null) {
                     value = cursor.getInt(
