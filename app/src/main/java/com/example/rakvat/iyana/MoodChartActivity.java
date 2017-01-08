@@ -17,12 +17,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.R.attr.value;
+
 
 public class MoodChartActivity extends AppCompatActivity {
-
-
-    // The number of pages (wizard steps) to show in this demo.
-    private static final int NUM_PAGES = 10;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -38,6 +36,7 @@ public class MoodChartActivity extends AppCompatActivity {
     protected List<String> mTitles;
     protected ArrayList<Integer> mMoodValues;
     protected ArrayList<Integer> mTimeValues;
+    protected ArrayList<Integer> mColors;
     protected ArrayList<ArrayList<Integer>> mFactorValues;
 
 
@@ -48,16 +47,19 @@ public class MoodChartActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
         Util.setTitleBar(this, R.string.nav_mood_graphs);
 
+        initializeData();
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.mood_chart_pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-
-        initializeData();
     }
 
     private void initializeData() {
+        mColors = new ArrayList<Integer>();
+        for (int i = 0; i < Util.COLORS.length; i++) {
+            mColors.add(Util.COLORS[i]);
+        }
         mTitles = FactorTitleHelper.getFactorTitles(this);
         Cursor cursor = Util.getDBData(this);
         mMoodValues = new ArrayList<Integer>();
@@ -66,8 +68,6 @@ public class MoodChartActivity extends AppCompatActivity {
         for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
             mFactorValues.add(new ArrayList<Integer>());
         }
-
-
 
         long timeReference = 0;
         long now = 0;
@@ -93,6 +93,19 @@ public class MoodChartActivity extends AppCompatActivity {
             }
         }
         cursor.close();
+
+        // eliminate mFactorValues with all values == 0
+        for (int i = FactorTitleHelper.MAX_FACTORS - 1; i >= 0; i--) {
+            int sum = 0;
+            for (int j = 0; j < mFactorValues.get(i).size(); j++) {
+                sum+= mFactorValues.get(i).get(j);
+            }
+            if (sum == 0) {
+                mFactorValues.remove(i);
+                mTitles.remove(i);
+                mColors.remove(i);
+            }
+        }
     }
 
     @Override
@@ -144,12 +157,12 @@ public class MoodChartActivity extends AppCompatActivity {
             values.add(mMoodValues);
             values.add(mFactorValues.get(position));
             values.add(mTimeValues);
-            return ChartFragment.newInstance(values, title);
+            return ChartFragment.newInstance(values, title, mColors.get(position));
         }
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return mFactorValues.size();
         }
     }
 }

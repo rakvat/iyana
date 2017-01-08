@@ -15,7 +15,6 @@ import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -30,23 +29,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.rakvat.iyana.R.string.app_name;
-import static com.example.rakvat.iyana.Util.getDBData;
+import static com.example.rakvat.iyana.Util.COLORS;
 
 public class TimeChartActivity extends AppCompatActivity {
 
-    public static final int[] COLORS = {
-            Color.rgb(170, 0, 212),
-            Color.rgb(10, 0, 212),
-            Color.rgb(0, 170, 212),
-            Color.rgb(0, 212, 110),
-            Color.rgb(212, 205, 0),
-            Color.rgb(212, 170, 0),
-            Color.rgb(212, 125, 0),
-            Color.rgb(212, 0, 0),
-            Color.rgb(118, 118, 118),
-            Color.rgb(200, 200, 200),
-    };
     private static final int MAX_X_RANGE = 1000 * 60 * 60 * 24 * 7; // 7 days
     private static final float MARKER_OFFSET = 0.1f;
     private static final int X_OFFSET = 1000 * 60 * 60 * 6;
@@ -152,7 +138,7 @@ public class TimeChartActivity extends AppCompatActivity {
             if (titles.get(i) != null && entries.get(i).size() > 0) {
                 ScatterDataSet factorDataSet =
                         new ScatterDataSet(entries.get(i), Util.capitalize(titles.get(i)));
-                styleDataSet(factorDataSet, COLORS[i]);
+                styleDataSet(factorDataSet, Util.COLORS[i]);
                 dataSets.add(factorDataSet);
             }
         }
