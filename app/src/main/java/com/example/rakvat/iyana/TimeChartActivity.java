@@ -1,7 +1,6 @@
 package com.example.rakvat.iyana;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +27,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.example.rakvat.iyana.Util.COLORS;
 
 public class TimeChartActivity extends AppCompatActivity {
 
@@ -174,7 +171,7 @@ public class TimeChartActivity extends AppCompatActivity {
         yAxis.setGranularity(1);
         yAxis.setLabelCount(7, true);
         yAxis.setDrawGridLines(false);
-        yAxis.setValueFormatter(new YAxisValueFormatter());
+        yAxis.setValueFormatter(new PlusMinusValueFormatter());
 
         // Hide the description
         Description d = new Description();

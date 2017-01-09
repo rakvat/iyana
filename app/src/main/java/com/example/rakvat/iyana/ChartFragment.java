@@ -1,5 +1,4 @@
 package com.example.rakvat.iyana;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -20,8 +18,6 @@ import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.factor;
 
 
 public class ChartFragment extends Fragment {
@@ -92,12 +88,9 @@ public class ChartFragment extends Fragment {
 
     private void setScatterData(Chart chart, List<Entry> entries) {
         List<IScatterDataSet> dataSets = new ArrayList<IScatterDataSet>();
-
         ScatterDataSet dataSet = new ScatterDataSet(entries, Util.capitalize(mTitle));
-        // TODO change color to color of factor
         styleDataSet(dataSet);
         dataSets.add(dataSet);
-
         ScatterData data = new ScatterData(dataSets);
         chart.setData(data);
     }
@@ -121,6 +114,13 @@ public class ChartFragment extends Fragment {
         XAxis xAxis = chart.getXAxis();
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setAxisMinimum(0.0f);
+        xAxis.setAxisMaximum(6.0f);
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.setGranularity(1);
+        xAxis.setLabelCount(7, true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter(new PlusMinusValueFormatter());
 
         YAxis right = chart.getAxisRight();
         right.setDrawLabels(false);
@@ -133,15 +133,17 @@ public class ChartFragment extends Fragment {
         yAxis.setGranularity(1);
         yAxis.setLabelCount(7, true);
         yAxis.setDrawGridLines(false);
-        yAxis.setValueFormatter(new YAxisValueFormatter());
+        yAxis.setValueFormatter(new PlusMinusValueFormatter());
 
         // Hide the description
         Description d = new Description();
         d.setText(Util.capitalize(mTitle));
+        //d.setPosition(0.0f, chart.getViewPortHandler().contentTop() + 30);
         chart.setDescription(d);
 
         chart.getLegend().setEnabled(false);
 
+        chart.setScaleXEnabled(false);
         chart.setScaleYEnabled(false);
         chart.setDoubleTapToZoomEnabled(false);
     }

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class YAxisValueFormatter implements IAxisValueFormatter {
+public class PlusMinusValueFormatter implements IAxisValueFormatter {
 
     private static final Map<Integer, String> value2SignMap;
     static {
