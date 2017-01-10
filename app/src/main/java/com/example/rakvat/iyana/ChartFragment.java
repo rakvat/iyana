@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.ScatterChart;
@@ -16,13 +17,17 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.offset;
 
 
 public class ChartFragment extends Fragment {
 
-    private static final float MARKER_OFFSET = 0.1f;
+    private static final float MARKER_OFFSET = 0.05f;
     private String mTitle;
     private Integer mColor;
     private ArrayList<Integer> mXValues;
@@ -62,6 +67,8 @@ public class ChartFragment extends Fragment {
     }
 
     private void initializeChart() {
+        TextView label = (TextView) mRootView.findViewById(R.id.label);
+        label.setText(Util.capitalize(mTitle));
         ScatterChart chart = (ScatterChart) mRootView.findViewById(R.id.mood_chart);
         List<Entry> entries = new ArrayList<Entry>();
         mTimeValues = populateEntries(entries);
@@ -74,13 +81,16 @@ public class ChartFragment extends Fragment {
 
 
     private ArrayList<Integer> populateEntries(List<Entry> entries) {
-        // TODO: check for multiple values on same spot, use offset
+        int[][] valueCounter = new int[5][5]; // default value is 0
         ArrayList<Integer> modifiedTimeValues = new ArrayList<Integer>();
         for(int i = 0; i < mXValues.size(); i++) {
             //check if factor values are 0, skip those
             if(mYValues.get(i) != 0){
                 modifiedTimeValues.add(mTimeValues.get(i));
-                entries.add(new Entry(mXValues.get(i), mYValues.get(i)));
+                float offset = valueCounter[mXValues.get(i)-1][mYValues.get(i)-1] * MARKER_OFFSET;
+                entries.add(new Entry(mXValues.get(i), mYValues.get(i) + offset));
+                valueCounter[mXValues.get(i)-1][mYValues.get(i)-1] =
+                        valueCounter[mXValues.get(i)-1][mYValues.get(i)-1] + 1;
             }
         }
         return modifiedTimeValues;
@@ -88,7 +98,7 @@ public class ChartFragment extends Fragment {
 
     private void setScatterData(Chart chart, List<Entry> entries) {
         List<IScatterDataSet> dataSets = new ArrayList<IScatterDataSet>();
-        ScatterDataSet dataSet = new ScatterDataSet(entries, Util.capitalize(mTitle));
+        ScatterDataSet dataSet = new ScatterDataSet(entries, "");
         styleDataSet(dataSet);
         dataSets.add(dataSet);
         ScatterData data = new ScatterData(dataSets);
@@ -137,11 +147,12 @@ public class ChartFragment extends Fragment {
 
         // Hide the description
         Description d = new Description();
-        d.setText(Util.capitalize(mTitle));
+        d.setText("Mood");
         //d.setPosition(0.0f, chart.getViewPortHandler().contentTop() + 30);
         chart.setDescription(d);
 
         chart.getLegend().setEnabled(false);
+        chart.setHighlightPerTapEnabled(false);
 
         chart.setScaleXEnabled(false);
         chart.setScaleYEnabled(false);
