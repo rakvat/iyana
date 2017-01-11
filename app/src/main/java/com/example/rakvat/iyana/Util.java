@@ -12,16 +12,16 @@ import java.util.Date;
 public class Util {
 
     public static final int[] COLORS = {
-            Color.rgb(170, 0, 212),
-            Color.rgb(10, 0, 212),
-            Color.rgb(0, 170, 212),
-            Color.rgb(0, 212, 110),
-            Color.rgb(212, 205, 0),
-            Color.rgb(212, 170, 0),
-            Color.rgb(212, 125, 0),
-            Color.rgb(212, 0, 0),
-            Color.rgb(118, 118, 118),
-            Color.rgb(200, 200, 200),
+            Color.rgb(220, 0, 176),
+            Color.rgb(140, 0, 220),
+            Color.rgb(2, 37, 243),
+            Color.rgb(42, 195, 252),
+            Color.rgb(65, 201, 3),
+            Color.rgb(254, 245, 6),
+            Color.rgb(254, 147, 7),
+            Color.rgb(220, 0, 0),
+            Color.rgb(121, 0, 0),
+            Color.rgb(0, 121, 11),
     };
 
     public static String capitalize(String str) {
