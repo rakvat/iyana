@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class Util {
 
     public static final int[] COLORS = {
@@ -30,8 +33,11 @@ public class Util {
                 setTitle(context.getString(R.string.app_name) + ": " + context.getString(string_id));
     }
 
-
     public static Cursor getDBData(Context context) {
+        return getDBData(context, 0);
+    }
+
+    public static Cursor getDBData(Context context, int numberOfDays) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -56,6 +62,12 @@ public class Util {
 
         String selection = "";
         String[] selectionArgs = {};
+        if(numberOfDays > 0) {
+            long now = new Date().getTime();
+            long timeLimit = now - 1000l * 60 * 60 * 24 * numberOfDays;
+            selection = DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " > ?";
+            selectionArgs = new String[] { Long.toString(timeLimit) };
+        }
         String sortOrder =
                 DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " ASC";
         Cursor cursor = db.query(

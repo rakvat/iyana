@@ -77,9 +77,6 @@ public class ChartFragment extends Fragment {
         chart.invalidate(); // refresh
     }
 
-
-
-
     private ArrayList<Integer> populateEntries(List<Entry> entries) {
         int[][] valueCounter = new int[5][5]; // default value is 0
         ArrayList<Integer> modifiedTimeValues = new ArrayList<Integer>();
@@ -108,16 +105,21 @@ public class ChartFragment extends Fragment {
     private void styleDataSet(ScatterDataSet dataSet) {
         int[] colors = new int[mTimeValues.size()];
         for (int i = 0; i < mTimeValues.size(); i++) {
-            int f = mTimeValues.get(i);
-            colors[i] = Color.argb(f,
-                                   Color.red(mColor),
-                                   Color.green(mColor),
-                                   Color.blue(mColor));
+            colors[i] = interpolateColor(mColor, mTimeValues.get(i));
         }
         dataSet.setColors(colors);
         dataSet.setDrawValues(false);
         dataSet.setScatterShapeSize(20);
         dataSet.setScatterShape(ScatterChart.ScatterShape.SQUARE);
+    }
+
+    // a * (1-t) + b * t
+    private int interpolateColor(Integer mColor, Integer timeValue) {
+        float t = timeValue/255.0f;
+        return Color.rgb(
+                (int)(255.0f * (1.0f - t) + Color.red(mColor) * t),
+                (int)(255.0f * (1.0f - t) + Color.green(mColor) * t),
+                (int)(255.0f * (1.0f - t) + Color.blue(mColor) * t));
     }
 
     private void styleChart(ScatterChart chart) {

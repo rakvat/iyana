@@ -22,6 +22,7 @@ import static android.R.attr.value;
 
 public class MoodChartActivity extends AppCompatActivity {
 
+    private static int NUM_DAYS = 30;
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -61,7 +62,7 @@ public class MoodChartActivity extends AppCompatActivity {
             mColors.add(Util.COLORS[i]);
         }
         mTitles = FactorTitleHelper.getFactorTitles(this);
-        Cursor cursor = Util.getDBData(this);
+        Cursor cursor = Util.getDBData(this, NUM_DAYS);
         mMoodValues = new ArrayList<Integer>();
         mTimeValues = new ArrayList<Integer>();
         mFactorValues = new ArrayList<ArrayList<Integer>>();
@@ -69,16 +70,12 @@ public class MoodChartActivity extends AppCompatActivity {
             mFactorValues.add(new ArrayList<Integer>());
         }
 
-        long timeReference = 0;
-        long now = 0;
+        long timeReference = new Date().getTime() - 1000l * 60 * 60 * 24 * NUM_DAYS;
+        long now = new Date().getTime() - timeReference;
         long t = 0;
         while(cursor.moveToNext()) {
             long timestamp = cursor.getLong(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
-            if(timeReference == 0) {
-                timeReference = timestamp;
-                now = new Date().getTime() - timeReference;
-            }
             t = timestamp - timeReference;
             int value = cursor.getInt(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
