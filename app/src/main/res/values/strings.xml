@@ -50,6 +50,19 @@
         \n
         You can read the notes you have taken when entering data by touching data points in the graph.
     </string>
+    <string name="mood_chart_help">Here you can see how your mood is influenced by the factors you are tracking (or how your mood influences these factors). This is called correlation.
+        There is one chart for each factor. You can navigate through them by swiping the left and right.
+        The x-axis is always the mood and the y-axis the factor.\n
+        \n
+        These charts only show values of the last 30 days. Older values are fading to white. If there are multiple
+        entries in the database with the same values, they are shown as stacks of squares.\n
+        \n
+        What does that tell you? Let\'s say you are tracking the factor sleep and looking at that chart. If the squares are distributed randomly over the whole chart,
+        then there is probably no relation between your mood and your sleep. If you see most the squares close to a diagonal from the left bottom to the right top,
+        you can conclude that your mood tends to be better when you slept well. However, it\'s also possible that you don\'t sleep well when you are in a bad mood.
+        (It\'s also possible that you tend to enter a bad value for sleep if you are in a bad mood even though you slept well.)
+        That\'s something the data can\'t tell you, but you might know or learn that yourself if you track and reflect your mood over time.
+    </string>
     <string name="nav_back">Back</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="about">About this app</string>
