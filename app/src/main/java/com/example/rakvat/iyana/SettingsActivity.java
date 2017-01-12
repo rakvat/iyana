@@ -26,7 +26,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
         Util.setTitleBar(this, R.string.nav_settings);
         setFactorTitles();
     }

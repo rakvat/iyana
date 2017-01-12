@@ -13,7 +13,6 @@ public class HelpActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
         Util.setTitleBar(this, R.string.nav_help);
     }
 

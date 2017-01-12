@@ -5,8 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class Util {
@@ -29,8 +29,11 @@ public class Util {
     }
 
     public static void setTitleBar(AppCompatActivity context, int string_id) {
+        context.setSupportActionBar((Toolbar) context.findViewById(R.id.my_toolbar));
+        context.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        context.getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         context.getSupportActionBar().
-                setTitle(context.getString(R.string.app_name) + ": " + context.getString(string_id));
+                setTitle("  " + context.getString(string_id));
     }
 
     public static Cursor getDBData(Context context) {

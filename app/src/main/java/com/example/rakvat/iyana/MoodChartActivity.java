@@ -46,7 +46,6 @@ public class MoodChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_chart);
-        setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
         Util.setTitleBar(this, R.string.nav_mood_graphs);
 
         initializeData();

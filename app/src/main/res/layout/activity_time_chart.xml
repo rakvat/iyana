@@ -4,15 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimaryDark"
-        android:elevation="4dp"
-        android:title="@string/app_name"
-        android:titleTextColor="@color/colorAccent"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+    <include layout="@layout/toolbar"/>
 
     <com.github.mikephil.charting.charts.ScatterChart
         android:id="@+id/time_chart"
