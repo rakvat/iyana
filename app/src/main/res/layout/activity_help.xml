@@ -5,10 +5,15 @@
 
     <include layout="@layout/toolbar"/>
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="@string/help"
-        android:id="@+id/helpTextView" />
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@string/help"
+            android:autoLink="web"
+            android:id="@+id/helpTextView" />
+    </ScrollView>
 </LinearLayout>

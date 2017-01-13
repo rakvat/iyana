@@ -70,7 +70,7 @@
         \n
         <b>Disclaimer</b>\n
         If you are experiencing acute severe depressions or other forms of mental distress that is preventing you to live your normal life, please find professional help.
-        Call a friend, a crisis hotline, a doctor, psychologist or psychiatrist. Be careful with spiritual anti-crisis offers. People offering the often don't have profound training
+        Call a friend, a crisis hotline, a doctor, psychologist or psychiatrist. Be careful with spiritual anti-crisis offers. People offering the often don\'t have profound training
         and you might need more than fairy tales and hanky-panky.\n
         \n
         Remember, you are not alone. Thousands of people go through these very bad moods and thousands
@@ -105,6 +105,24 @@
         In most sections of this app you can find a "?" in the top right corner. Clicking on that will give you more detailed information and help about that specific part of the app.
     </string>
     <string name="about">
+        <b>What does IYANA stand for?</b>\n
+        IYANA is an abbreviation, the first part of the famous saying "If You Are Not Angry, you are not paying attention."\n
+        \n
+        <b>What does that have to do with a mood analysis app?</b>\n
+        Most resources about well-being and mental health want you to simply be happy, let go of all the troubling thoughts and the anger.
+        Some of them just want you to get back to normal so that you can become a "productive" part of the society again.\n
+        \n
+        The mindset behind this app is different: \n
+        1. It\'s ok to be angry. In fact, if you look at all the stuff happening in the world, how can you not be angry?\n
+        2. It\'s not (only) your fault, if you are in a phase of bad mood or crisis. All the competition, injustice, isolation and exploitation inherent in the capitalistic
+        world order, that is dominating our lives, is responsible not only for misery but also for an increase in depressions around the world
+        (see e.g.http://nymag.com/scienceofus/2016/03/for-80-years-young-americans-have-been-getting-more-anxious-and-depressed.html).\n
+        3. You don\'t need to get better to be more productive. If you want, you can try to get better to be able
+        to enjoy more of your life, to do more of those things that you care about, and maybe, when feeling strong enough, even to make the world a little bit better. \n
+        \n
+        <b>A Better World?</b>\n
+        Is there alternative? Is that even possible? You can find more thoughts about the transformation into societies with less
+        pressure and less injustice and less mental issues here http://transform.social.
     </string>
     <string name="help_ok">Ok</string>
 </resources>
