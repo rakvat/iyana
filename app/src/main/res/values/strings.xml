@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">IYANA</string>
-    <string name="welcome_message">Welcome to IYANA</string>
+    <string name="welcome_message"><b>Welcome to IYANA</b></string>
     <string name="nav_about">About</string>
     <string name="nav_help">Help</string>
     <string name="nav_mood_graphs">Mood Charts</string>
     <string name="nav_time_graphs">Time Charts</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_enter_data">Enter Data</string>
-    <string name="nav_welcome">Dashboard</string>
     <string name="settings_title">Settings</string>
     <string name="settings_help">You can select up to 10 factors that you want to track every day.
         You should choose factors that you think might have an influence on your mood or be influenced by your mood.\n
@@ -97,7 +96,16 @@
         No matter if you have a crisis plan or if you simply want to take more control over your mood, IYANA can be one of your tools to better understand your mood, reasons
         for mood changes and thus give you the power to influence your mood. That way, you could be able have better time, enjoy and be motivated to get some things done.\n
         \n
-        <b>Tour through IYANA</b>\n
+        <b>A Tour through IYANA</b>\n
+        When you first use this App, get started by reading the Help and About sections. If you want to get started with tracking your mood, go to the settings section and
+        choose one to three factors you want to track. You can add more later, when you got a feeling for the app. After that, go to "Enter Data" and enter how you are doing at the moment.
+        If you are doing this regularly over some days, there will soon be enough data get some insights from the time and mood charts.\n
+        \n
+        In most sections of this app you can find a "?" in the top right corner. Clicking on that will give you more detailed information and help about that specific part of the app.
+    </string>
+    <!-- This is part of the help text -->
+    <string name="home">
+        <b>A Tour through IYANA</b>\n
         When you first use this App, get started by reading the Help and About sections. If you want to get started with tracking your mood, go to the settings section and
         choose one to three factors you want to track. You can add more later, when you got a feeling for the app. After that, go to "Enter Data" and enter how you are doing at the moment.
         If you are doing this regularly over some days, there will soon be enough data get some insights from the time and mood charts.\n

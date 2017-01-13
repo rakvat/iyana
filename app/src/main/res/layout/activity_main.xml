@@ -10,6 +10,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="@string/welcome_message"
-        android:id="@+id/welcomeTextView" />
+        android:id="@+id/welcomeText" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/home"
+        android:id="@+id/homeText" />
 </LinearLayout>
