@@ -8,7 +8,6 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_enter_data">Enter Data</string>
     <string name="nav_welcome">Dashboard</string>
-    <string name="help">Here to help</string>
     <string name="settings_title">Settings</string>
     <string name="settings_help">You can select up to 10 factors that you want to track every day.
         You should choose factors that you think might have an influence on your mood or be influenced by your mood.\n
@@ -64,7 +63,48 @@
         That\'s something the data can\'t tell you, but you might know or learn that yourself if you track and reflect your mood over time.
     </string>
     <string name="nav_back">Back</string>
-    <string name="title_activity_about">AboutActivity</string>
-    <string name="about">About this app</string>
+    <string name="help">
+        <b>Motivation for this App</b>\n
+        You are feeling sad, unhappy, unmotivated, depressed and don\'t know why? This app is a tool that could help you to better understand
+        your mood and factors that lead to mood changes.\n
+        \n
+        <b>Disclaimer</b>\n
+        If you are experiencing acute severe depressions or other forms of mental distress that is preventing you to live your normal life, please find professional help.
+        Call a friend, a crisis hotline, a doctor, psychologist or psychiatrist. Be careful with spiritual anti-crisis offers. People offering the often don't have profound training
+        and you might need more than fairy tales and hanky-panky.\n
+        \n
+        Remember, you are not alone. Thousands of people go through these very bad moods and thousands
+        of people are out there to help. IYANA is not meant to help in acute crisis but it can be one of your tools for preventing crisis.\n
+        \n
+        <b>Bad Mood and Crisis Prevention</b>\n
+        To prevent phases of bad mood or crisis that keep you from being able to live the life you want to live, it is good to get to know your moods,
+        feelings, needs, triggers and coping mechanisms better.\n
+        \n
+        The About Section of this app has some more thoughts about the reasons behind bad moods and bad feelings.
+        One good collection of resources about handling crisis is this page http://theicarusproject.net/welcome-to-the-crisis-toolkit/.\n
+        \n
+        One basic advice to prevent crisis: Track your mood daily. You can use IYANA or some other tool for this purpose. Write down a crisis plan. It should list
+        multiple levels of bad mood, describe you feel in each level so that you can identify, which level you are in, and list coping mechanismis for each level,
+        that should help you to get back into better mood. Here is a very short example, just to give you an idea how such a plan could look like. Your plan should be waaaaay
+        more detailed.\n
+        ++: Everything is good. ⇒ Keep going and enjoy.\n
+        +: Ok, but not super happy. Troubling thoughts. ⇒ Meditate, cook.\n
+        +-: Kind of bad. Unmotivated, can\'t concentrate. ⇒ Sports.\n
+        -: Bad. Feeling depressed. ⇒ Meet friends, get rest.\n
+        --: Very bad. Breakdown. Not able to do anything. ⇒ Take some time off, get professional help.\n
+        \n
+        <b>How This App can Help</b>\n
+        No matter if you have a crisis plan or if you simply want to take more control over your mood, IYANA can be one of your tools to better understand your mood, reasons
+        for mood changes and thus give you the power to influence your mood. That way, you could be able have better time, enjoy and be motivated to get some things done.\n
+        \n
+        <b>Tour through IYANA</b>\n
+        When you first use this App, get started by reading the Help and About sections. If you want to get started with tracking your mood, go to the settings section and
+        choose one to three factors you want to track. You can add more later, when you got a feeling for the app. After that, go to "Enter Data" and enter how you are doing at the moment.
+        If you are doing this regularly over some days, there will soon be enough data get some insights from the time and mood charts.\n
+        \n
+        In most sections of this app you can find a "?" in the top right corner. Clicking on that will give you more detailed information and help about that specific part of the app.
+    </string>
+    <string name="about">
+    </string>
     <string name="help_ok">Ok</string>
 </resources>
