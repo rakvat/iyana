@@ -105,8 +105,10 @@ public class TimeChartActivity extends AppCompatActivity {
             int value = cursor.getInt(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD));
             mValueCounter = new ArrayList<Integer>(Arrays.asList(0, 0, 0, 0, 0));
-            mValueCounter.set(value - 1, mValueCounter.get(value - 1) + 1);
-            moodEntries.add(new Entry(t, value + mValueCounter.get(value - 1) * MARKER_OFFSET));
+            if (value != 0) {
+                mValueCounter.set(value - 1, mValueCounter.get(value - 1) + 1);
+                moodEntries.add(new Entry(t, value + mValueCounter.get(value - 1) * MARKER_OFFSET));
+            }
             for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
                 if (titles.get(i) != null) {
                     value = cursor.getInt(

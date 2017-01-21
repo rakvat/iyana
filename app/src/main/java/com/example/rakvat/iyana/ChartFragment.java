@@ -82,7 +82,7 @@ public class ChartFragment extends Fragment {
         ArrayList<Integer> modifiedTimeValues = new ArrayList<Integer>();
         for(int i = 0; i < mXValues.size(); i++) {
             //check if factor values are 0, skip those
-            if(mYValues.get(i) != 0){
+            if(mYValues.get(i) != 0 && mXValues.get(i) != 0){
                 modifiedTimeValues.add(mTimeValues.get(i));
                 float offset = valueCounter[mXValues.get(i)-1][mYValues.get(i)-1] * MARKER_OFFSET;
                 entries.add(new Entry(mXValues.get(i), mYValues.get(i) + offset));
