@@ -96,16 +96,21 @@ public class EnterDataActivity extends AppCompatActivity {
 
         storeTextFrom(R.id.data_note, DatabaseContract.MoodEntry.COLUMN_NAME_NOTE, values);
         storeValueFrom(MOOD_ID, DatabaseContract.MoodEntry.COLUMN_NAME_MOOD, values);
-        for(int i = 0; i < DatabaseContract.MoodEntry.FACTOR_COLUMNS.length; i++) {
-            if (mColumns.contains(i)) {
-                storeValueFrom(i, DatabaseContract.MoodEntry.FACTOR_COLUMNS[i], values);
+        if (values.getAsInteger(DatabaseContract.MoodEntry.COLUMN_NAME_MOOD) == null) {
+            Toast toast = Toast.makeText(this, R.string.data_mood_required, Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+            for (int i = 0; i < DatabaseContract.MoodEntry.FACTOR_COLUMNS.length; i++) {
+                if (mColumns.contains(i)) {
+                    storeValueFrom(i, DatabaseContract.MoodEntry.FACTOR_COLUMNS[i], values);
+                }
             }
-        }
-        db.insert(DatabaseContract.MoodEntry.TABLE_NAME, null, values);
+            db.insert(DatabaseContract.MoodEntry.TABLE_NAME, null, values);
 
-        Toast toast = Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT);
-        toast.show();
-        finish();
+            Toast toast = Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT);
+            toast.show();
+            finish();
+        }
     }
 
     private void storeValueFrom(int view_id, String dbColumn, ContentValues values) {
