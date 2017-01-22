@@ -134,4 +134,6 @@
     </string>
     <string name="help_ok">Ok</string>
     <string name="data_mood_required">Please enter your mood.</string>
+    <string name="nav_diary">Diary</string>
+    <string name="diary_data_help">TODO</string>
 </resources>

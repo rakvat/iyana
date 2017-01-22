@@ -41,6 +41,26 @@ public class EnterDataActivity extends AppCompatActivity {
         viewId2ValueMap = Collections.unmodifiableMap(aMap);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_enter_data);
+        Util.setTitleBar(this, R.string.nav_enter_data);
+
+        List<String> titles = FactorTitleHelper.getFactorTitles(this);
+        ViewGroup parent = (ViewGroup) findViewById(R.id.enter_data_list);
+        LayoutInflater inflater = getLayoutInflater();
+
+        inflateEnterValue(inflater, parent, getString(R.string.enter_data_mood_label), MOOD_ID);
+
+        for (int i = 0; i < titles.size(); i++) {
+            if (titles.get(i) == null || titles.get(i) == "") {
+                continue;
+            }
+            mColumns.add(i);
+            inflateEnterValue(inflater, parent, Util.capitalize(titles.get(i)), i);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,27 +82,6 @@ public class EnterDataActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_data);
-        Util.setTitleBar(this, R.string.nav_enter_data);
-
-        List<String> titles = FactorTitleHelper.getFactorTitles(this);
-        ViewGroup parent = (ViewGroup) findViewById(R.id.enter_data_list);
-        LayoutInflater inflater = getLayoutInflater();
-
-        inflateEnterValue(inflater, parent, getString(R.string.enter_data_mood_label), MOOD_ID);
-
-        for (int i = 0; i < titles.size(); i++) {
-            if (titles.get(i) == null || titles.get(i) == "") {
-                continue;
-            }
-            mColumns.add(i);
-            inflateEnterValue(inflater, parent, Util.capitalize(titles.get(i)), i);
         }
     }
 

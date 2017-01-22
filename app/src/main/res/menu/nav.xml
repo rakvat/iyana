@@ -8,6 +8,8 @@
         android:title="@string/nav_time_graphs" />
     <item android:id="@+id/mood_charts"
         android:title="@string/nav_mood_graphs" />
+    <item android:id="@+id/diary"
+        android:title="@string/nav_diary" />
     <item android:id="@+id/help"
         android:title="@string/nav_help" />
     <item android:id="@+id/about"

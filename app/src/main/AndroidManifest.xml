@@ -11,6 +11,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -20,6 +21,7 @@
         <activity android:name=".TimeChartActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".MoodChartActivity" />
+        <activity android:name=".DiaryActivity"></activity>
     </application>
 
 </manifest>

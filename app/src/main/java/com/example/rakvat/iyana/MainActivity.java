@@ -48,12 +48,20 @@ public class MainActivity extends AppCompatActivity {
             case R.id.time_charts:
                 showTimeCharts();
                 return true;
+            case R.id.diary:
+                showDiary();
+                return true;
             case R.id.mood_charts:
                 showMoodCharts();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showDiary() {
+        Intent intent = new Intent(this, DiaryActivity.class);
+        startActivity(intent);
     }
 
     private void showMoodCharts() {
