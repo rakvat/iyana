@@ -1,5 +1,6 @@
 package com.example.rakvat.iyana;
 
+import android.database.Cursor;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,9 +8,17 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import static android.R.attr.id;
 
 public class DiaryActivity extends AppCompatActivity {
 
@@ -19,13 +28,24 @@ public class DiaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_diary);
         Util.setTitleBar(this, R.string.nav_diary);
 
-        List<String> entries; //TODO, get all days;
-        //ViewGroup parent = (ViewGroup) findViewById(R.id.diary_entry_list);
-        //LayoutInflater inflater = getLayoutInflater();
 
-        //for (int i = 0; i < entries.size(); i++) {
-        //    // TODO inflate
-        //}
+        ViewGroup parent = (ViewGroup) findViewById(R.id.diary_entry_list);
+        LayoutInflater inflater = getLayoutInflater();
+        Cursor cursor = Util.getDBData(this);
+
+        while(cursor.moveToNext()) {
+            long timestamp = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
+
+            View rowView = inflater.inflate(R.layout.diary_row, null);
+            TextView dateView = (TextView) rowView.findViewById(R.id.date);
+            DateFormat format = new SimpleDateFormat("EEE, dd.MM.yyyy HH:mm", Locale.ENGLISH);
+            Date date = new Date();
+            date.setTime(timestamp);
+            dateView.setText(format.format(date));
+            rowView.setId((int) (long)timestamp);
+            parent.addView(rowView);
+        }
     }
 
 
@@ -50,5 +70,11 @@ public class DiaryActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    /** Called when the user clicks an edit button */
+    public void edit(View view) {
+
     }
 }
