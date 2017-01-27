@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.Date;
 
+import static android.R.attr.offset;
+
 public class Util {
 
     public static final int[] COLORS = {
@@ -40,7 +42,11 @@ public class Util {
         return getDBData(context, 0);
     }
 
-    public static Cursor getDBData(Context context, int numberOfDays) {
+    public static Cursor getDBData(Context context, int fromDaysBeforeNow) {
+        return getDBData(context, fromDaysBeforeNow, 0, true);
+    }
+
+    public static Cursor getDBData(Context context, int fromDaysBeforeNow, int toDaysBeforeNow, boolean asc) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -65,14 +71,24 @@ public class Util {
 
         String selection = "";
         String[] selectionArgs = {};
-        if(numberOfDays > 0) {
+        if (fromDaysBeforeNow > 0) {
             long now = new Date().getTime();
-            long timeLimit = now - 1000l * 60 * 60 * 24 * numberOfDays;
-            selection = DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " > ?";
-            selectionArgs = new String[] { Long.toString(timeLimit) };
+            long lowerLimit = now - 1000l * 60 * 60 * 24 * fromDaysBeforeNow;
+            if (toDaysBeforeNow > 0) {
+                long upperLimit = now - 1000l * 60 * 60 * 24 * toDaysBeforeNow;
+                selection = DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " < ? AND " +
+                        DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " >= ?";
+                selectionArgs = new String[]{Long.toString(upperLimit), Long.toString(lowerLimit)};
+            } else {
+                selection = DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " >= ?";
+                selectionArgs = new String[]{Long.toString(lowerLimit)};
+            }
         }
         String sortOrder =
                 DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " ASC";
+        if (asc == false) {
+            sortOrder = DatabaseContract.MoodEntry.COLUMN_NAME_DATE + " DESC";
+        }
         Cursor cursor = db.query(
                 DatabaseContract.MoodEntry.TABLE_NAME,    // The table to query
                 projection,                               // The columns to return

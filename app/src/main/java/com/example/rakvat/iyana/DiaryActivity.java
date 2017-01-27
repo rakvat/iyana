@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.Inflater;
+
+import static android.R.attr.offset;
 
 
 public class DiaryActivity extends AppCompatActivity {
@@ -45,53 +48,9 @@ public class DiaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
         Util.setTitleBar(this, R.string.nav_diary);
-
-
-        ViewGroup parent = (ViewGroup) findViewById(R.id.diary_rows);
-        LayoutInflater inflater = getLayoutInflater();
-        Cursor cursor = Util.getDBData(this, MAX_DAYS);
-
-        while(cursor.moveToNext()) {
-            long timestamp = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
-
-            View rowView = inflater.inflate(R.layout.diary_row, null);
-            TextView dateView = (TextView) rowView.findViewById(R.id.date);
-            DateFormat format = new SimpleDateFormat("EEE, dd.MM.yyyy HH:mm", Locale.ENGLISH);
-            Date date = new Date();
-            date.setTime(timestamp);
-            dateView.setText(format.format(date));
-
-            String note = cursor.getString(
-                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_NOTE));
-            TextView noteView = (TextView) rowView.findViewById(R.id.note);
-            if (note != null && note != "") {
-                noteView.setText(note);
-                noteView.setVisibility(View.VISIBLE);
-            }
-
-            List<String> titles = FactorTitleHelper.getFactorTitles(this);
-            for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
-                if (titles.get(i) != null) {
-                    int value = cursor.getInt(
-                            cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.FACTOR_COLUMNS[i]));
-                    if (value != 0) {
-                        ViewGroup rowParent = (ViewGroup) rowView.findViewById(R.id.diary_row_entries);
-                        View rowEntryView = inflater.inflate(R.layout.diary_row_entry, null);
-                        TextView labelView = (TextView) rowEntryView.findViewById(R.id.label);
-                        labelView.setText(Util.capitalize(titles.get(i)));
-
-                        TextView valueView = (TextView) rowEntryView.findViewById(value2ViewIdMap.get(value));
-                        valueView.setVisibility(View.VISIBLE);
-
-                        rowParent.addView(rowEntryView);
-                    }
-                }
-            }
-            rowView.setId((int) (long)timestamp);
-            parent.addView(rowView);
-        }
+        initializeView();
     }
+
 
 
     @Override
@@ -128,5 +87,66 @@ public class DiaryActivity extends AppCompatActivity {
     public void delete(View view) {
         Toast toast = Toast.makeText(this, R.string.todo, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+
+    private void initializeView() {
+        ViewGroup parent = (ViewGroup) findViewById(R.id.diary_rows);
+        LayoutInflater inflater = getLayoutInflater();
+        int offset = 0;
+        int fromDaysBeforeNow = MAX_DAYS * (offset + 1);
+        int toDaysBeforeNow = MAX_DAYS * offset;
+        Cursor cursor = Util.getDBData(this, fromDaysBeforeNow, toDaysBeforeNow, false);
+
+        while(cursor.moveToNext()) {
+            long timestamp = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
+
+            View rowView = inflater.inflate(R.layout.diary_row, null);
+            TextView dateView = (TextView) rowView.findViewById(R.id.date);
+            DateFormat format = new SimpleDateFormat("EEE, dd.MM.yyyy HH:mm", Locale.ENGLISH);
+            Date date = new Date();
+            date.setTime(timestamp);
+            dateView.setText(format.format(date));
+
+            String note = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_NOTE));
+            TextView noteView = (TextView) rowView.findViewById(R.id.note);
+            if (note != null && note != "") {
+                noteView.setText(note);
+                noteView.setVisibility(View.VISIBLE);
+            }
+
+            inflateRow(inflater, rowView, cursor,
+                    DatabaseContract.MoodEntry.COLUMN_NAME_MOOD, "Mood");
+
+            List<String> titles = FactorTitleHelper.getFactorTitles(this);
+            for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+                if (titles.get(i) != null) {
+                    inflateRow(inflater, rowView, cursor,
+                            DatabaseContract.MoodEntry.FACTOR_COLUMNS[i],
+                            Util.capitalize(titles.get(i)));
+                }
+            }
+            rowView.setId((int) (long)timestamp);
+            parent.addView(rowView);
+        }
+    }
+
+
+    private void inflateRow(LayoutInflater inflater, View rowView, Cursor cursor, String dbId, String label) {
+        int value = cursor.getInt(
+                cursor.getColumnIndexOrThrow(dbId));
+        if (value != 0) {
+            ViewGroup rowParent = (ViewGroup) rowView.findViewById(R.id.diary_row_entries);
+            View rowEntryView = inflater.inflate(R.layout.diary_row_entry, null);
+            TextView labelView = (TextView) rowEntryView.findViewById(R.id.label);
+            labelView.setText(label);
+
+            TextView valueView = (TextView) rowEntryView.findViewById(value2ViewIdMap.get(value));
+            valueView.setVisibility(View.VISIBLE);
+
+            rowParent.addView(rowEntryView);
+        }
     }
 }
