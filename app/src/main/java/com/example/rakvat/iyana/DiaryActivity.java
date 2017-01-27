@@ -23,15 +23,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import static android.R.attr.id;
 import static android.view.View.GONE;
 
 
 public class DiaryActivity extends AppCompatActivity {
 
     private static final int MAX_DAYS = 7;
-
     private static int mPage = 0;
 
     private static final Map<Integer, Integer> value2ViewIdMap;
@@ -86,14 +83,18 @@ public class DiaryActivity extends AppCompatActivity {
 
     /** Called when the user clicks an edit button */
     public void edit(View view) {
-        Toast toast = Toast.makeText(this, R.string.todo, Toast.LENGTH_SHORT);
-        toast.show();
+        int dbRowId = ((View)(view.getParent().getParent())).getId();
+        Intent i = new Intent(this, EnterDataActivity.class);
+        i.putExtra("row", dbRowId);
+        startActivity(i);
+        finish();
     }
 
     /** Called when the user clicks a delete button */
     public void delete(View view) {
-        Toast toast = Toast.makeText(this, R.string.todo, Toast.LENGTH_SHORT);
-        toast.show();
+        int dbRowId = ((View)(view.getParent().getParent())).getId();
+        Util.deleteRow(this, dbRowId);
+        finish();
     }
 
     /** Called when the user clicks a back button */
@@ -154,7 +155,7 @@ public class DiaryActivity extends AppCompatActivity {
                             Util.capitalize(titles.get(i)));
                 }
             }
-            rowView.setId((int) (long)timestamp);
+            rowView.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry._ID)));
             parent.addView(rowView);
         }
 

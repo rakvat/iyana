@@ -1,6 +1,7 @@
 package com.example.rakvat.iyana;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.rakvat.iyana.R.id.note;
+
 public class EnterDataActivity extends AppCompatActivity {
 
     private static final int MOOD_ID = 100;
 
     private ArrayList<Integer> mColumns = new ArrayList<Integer>();
+    private int mRowId = -1;
 
     private static final Map<Integer, Integer> viewId2ValueMap;
     static {
@@ -40,6 +45,17 @@ public class EnterDataActivity extends AppCompatActivity {
         aMap.put(R.id.minusminus, 1);
         viewId2ValueMap = Collections.unmodifiableMap(aMap);
     }
+    private static final Map<Integer, Integer> value2ViewIdMap;
+    static {
+        Map<Integer, Integer> aMap = new HashMap<Integer, Integer>();
+        aMap.put(5, R.id.plusplus);
+        aMap.put(4, R.id.plus);
+        aMap.put(3, R.id.plusminus);
+        aMap.put(2, R.id.minus);
+        aMap.put(1, R.id.minusminus);
+        value2ViewIdMap = Collections.unmodifiableMap(aMap);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +63,36 @@ public class EnterDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_enter_data);
         Util.setTitleBar(this, R.string.nav_enter_data);
 
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            mRowId = b.getInt("row", -1);
+        }
+        Cursor cursor = null;
+        if (mRowId != -1) {
+            cursor = Util.getDBRow(this, mRowId);
+            cursor.moveToNext();
+        }
+
         List<String> titles = FactorTitleHelper.getFactorTitles(this);
         ViewGroup parent = (ViewGroup) findViewById(R.id.enter_data_list);
         LayoutInflater inflater = getLayoutInflater();
 
-        inflateEnterValue(inflater, parent, getString(R.string.enter_data_mood_label), MOOD_ID);
+        inflateEnterValue(inflater, parent, getString(R.string.enter_data_mood_label), MOOD_ID, cursor);
 
         for (int i = 0; i < titles.size(); i++) {
             if (titles.get(i) == null || titles.get(i) == "") {
                 continue;
             }
             mColumns.add(i);
-            inflateEnterValue(inflater, parent, Util.capitalize(titles.get(i)), i);
+            inflateEnterValue(inflater, parent, Util.capitalize(titles.get(i)), i, cursor);
+        }
+
+        if (cursor != null) {
+            String note = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_NOTE));
+            if (note != null) {
+                EditText editText = (EditText) findViewById(R.id.data_note);
+                editText.setText(note);
+            }
         }
     }
 
@@ -104,8 +138,14 @@ public class EnterDataActivity extends AppCompatActivity {
                     storeValueFrom(i, DatabaseContract.MoodEntry.FACTOR_COLUMNS[i], values);
                 }
             }
-            db.insert(DatabaseContract.MoodEntry.TABLE_NAME, null, values);
-
+            if (mRowId != -1) {
+                String[] selectionArgs = {Integer.toString(mRowId)};
+                db.update(DatabaseContract.MoodEntry.TABLE_NAME, values,
+                        DatabaseContract.MoodEntry._ID + " = ?",
+                        selectionArgs);
+            } else {
+                db.insert(DatabaseContract.MoodEntry.TABLE_NAME, null, values);
+            }
             Toast toast = Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT);
             toast.show();
             finish();
@@ -129,11 +169,22 @@ public class EnterDataActivity extends AppCompatActivity {
         }
     }
 
-    private void inflateEnterValue(LayoutInflater inflater, ViewGroup parent, String title, int id) {
+    private void inflateEnterValue(LayoutInflater inflater, ViewGroup parent, String title, int id, Cursor cursor) {
         View rowView = inflater.inflate(R.layout.enter_data_row, null);
         TextView label = (TextView) rowView.findViewById(R.id.label);
         label.setText(title);
         rowView.setId(id);
+        if (cursor != null) {
+            String dbColumnId = DatabaseContract.MoodEntry.COLUMN_NAME_MOOD;
+            if (id != MOOD_ID) {
+                dbColumnId = DatabaseContract.MoodEntry.FACTOR_COLUMNS[id];
+            }
+            int value = cursor.getInt(cursor.getColumnIndexOrThrow(dbColumnId));
+            if (value != 0) {
+                RadioButton button = (RadioButton) rowView.findViewById(value2ViewIdMap.get(value));
+                button.setChecked(true);
+            }
+        }
         parent.addView(rowView);
     }
 }
