@@ -1,5 +1,6 @@
 package com.example.rakvat.iyana;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,15 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.zip.Inflater;
 
-import static android.R.attr.offset;
+import static android.R.attr.id;
+import static android.view.View.GONE;
 
 
 public class DiaryActivity extends AppCompatActivity {
 
     private static final int MAX_DAYS = 7;
 
+    private static int mPage = 0;
 
     private static final Map<Integer, Integer> value2ViewIdMap;
     static {
@@ -48,6 +50,11 @@ public class DiaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary);
         Util.setTitleBar(this, R.string.nav_diary);
+
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            mPage = b.getInt("page", 0);
+        }
         initializeView();
     }
 
@@ -89,13 +96,32 @@ public class DiaryActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /** Called when the user clicks a back button */
+    public void back(View view) {
+        Intent i = new Intent(this, DiaryActivity.class);
+        i.putExtra("page", mPage + 1);
+        startActivity(i);
+        finish();
+    }
+
+    /** Called when the user clicks a forward button */
+    public void forward(View view) {
+        if (mPage == 0) {
+            return;
+        }
+        Intent i = new Intent(this, DiaryActivity.class);
+        i.putExtra("page", mPage - 1);
+        startActivity(i);
+        finish();
+    }
+
+
 
     private void initializeView() {
         ViewGroup parent = (ViewGroup) findViewById(R.id.diary_rows);
         LayoutInflater inflater = getLayoutInflater();
-        int offset = 0;
-        int fromDaysBeforeNow = MAX_DAYS * (offset + 1);
-        int toDaysBeforeNow = MAX_DAYS * offset;
+        int fromDaysBeforeNow = MAX_DAYS * (mPage + 1);
+        int toDaysBeforeNow = MAX_DAYS * mPage;
         Cursor cursor = Util.getDBData(this, fromDaysBeforeNow, toDaysBeforeNow, false);
 
         while(cursor.moveToNext()) {
@@ -130,6 +156,10 @@ public class DiaryActivity extends AppCompatActivity {
             }
             rowView.setId((int) (long)timestamp);
             parent.addView(rowView);
+        }
+
+        if (mPage == 0) {
+            findViewById(R.id.foreward).setVisibility(GONE);
         }
     }
 

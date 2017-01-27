@@ -61,7 +61,6 @@
         (It\'s also possible that you tend to enter a bad value for sleep if you are in a bad mood even though you slept well.)
         That\'s something the data can\'t tell you, but you might know or learn that yourself if you track and reflect your mood over time.
     </string>
-    <string name="nav_back">Back</string>
     <string name="help">
         <b>Motivation for this App</b>\n
         You are feeling sad, unhappy, unmotivated, depressed and don\'t know why? This app is a tool that could help you to better understand
@@ -140,4 +139,6 @@
     <string name="delete">Delete</string>
     <string name="entry_deleted">Entry Deleted</string>
     <string name="todo">todo</string>
+    <string name="nav_back">Back</string>
+    <string name="nav_forward">Forward</string>
 </resources>
