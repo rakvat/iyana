@@ -34,6 +34,7 @@ public class EnterDataActivity extends AppCompatActivity {
 
     private ArrayList<Integer> mColumns = new ArrayList<Integer>();
     private int mRowId = -1;
+    private long mTimestamp;
 
     private static final Map<Integer, Integer> viewId2ValueMap;
     static {
@@ -71,6 +72,7 @@ public class EnterDataActivity extends AppCompatActivity {
         if (mRowId != -1) {
             cursor = Util.getDBRow(this, mRowId);
             cursor.moveToNext();
+            mTimestamp = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_DATE));
         }
 
         List<String> titles = FactorTitleHelper.getFactorTitles(this);
@@ -139,6 +141,7 @@ public class EnterDataActivity extends AppCompatActivity {
                 }
             }
             if (mRowId != -1) {
+                values.put(DatabaseContract.MoodEntry.COLUMN_NAME_DATE, mTimestamp);
                 String[] selectionArgs = {Integer.toString(mRowId)};
                 db.update(DatabaseContract.MoodEntry.TABLE_NAME, values,
                         DatabaseContract.MoodEntry._ID + " = ?",

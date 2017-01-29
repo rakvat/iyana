@@ -149,7 +149,7 @@ public class DiaryActivity extends AppCompatActivity {
 
             List<String> titles = FactorTitleHelper.getFactorTitles(this);
             for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
-                if (titles.get(i) != null) {
+                if (titles.get(i) != null && titles.get(i) != "") {
                     inflateRow(inflater, rowView, cursor,
                             DatabaseContract.MoodEntry.FACTOR_COLUMNS[i],
                             Util.capitalize(titles.get(i)));
