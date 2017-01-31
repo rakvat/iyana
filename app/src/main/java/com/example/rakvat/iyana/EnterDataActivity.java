@@ -82,7 +82,7 @@ public class EnterDataActivity extends AppCompatActivity {
         inflateEnterValue(inflater, parent, getString(R.string.enter_data_mood_label), MOOD_ID, cursor);
 
         for (int i = 0; i < titles.size(); i++) {
-            if (titles.get(i) == null || titles.get(i) == "") {
+            if (titles.get(i) == null || titles.get(i).length() == 0) {
                 continue;
             }
             mColumns.add(i);

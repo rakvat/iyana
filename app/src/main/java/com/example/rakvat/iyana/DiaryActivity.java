@@ -139,7 +139,7 @@ public class DiaryActivity extends AppCompatActivity {
             String note = cursor.getString(
                     cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry.COLUMN_NAME_NOTE));
             TextView noteView = (TextView) rowView.findViewById(R.id.note);
-            if (note != null && note != "") {
+            if (note != null && note.length() > 0) {
                 noteView.setText(note);
                 noteView.setVisibility(View.VISIBLE);
             }
@@ -149,7 +149,7 @@ public class DiaryActivity extends AppCompatActivity {
 
             List<String> titles = FactorTitleHelper.getFactorTitles(this);
             for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
-                if (titles.get(i) != null && titles.get(i) != "") {
+                if (titles.get(i) != null && titles.get(i).length() > 0) {
                     inflateRow(inflater, rowView, cursor,
                             DatabaseContract.MoodEntry.FACTOR_COLUMNS[i],
                             Util.capitalize(titles.get(i)));
