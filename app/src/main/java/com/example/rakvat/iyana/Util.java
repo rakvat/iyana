@@ -1,5 +1,6 @@
 package com.example.rakvat.iyana;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -128,6 +129,17 @@ public class Util {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(DatabaseContract.MoodEntry.TABLE_NAME,
                 DatabaseContract.MoodEntry._ID + "=" + Integer.toString(dbRow), null);
+    }
+
+    public static void deleteColumn(Context context, String dbColumn)
+    {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(dbColumn, "");
+        String[] selectionArgs = { };
+        db.update(DatabaseContract.MoodEntry.TABLE_NAME, values, null, selectionArgs);
     }
 
 }

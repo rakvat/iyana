@@ -24,6 +24,10 @@ import static android.R.id.message;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsDialog.NoticeDialogListener {
 
+    private List<String> mNewTitles;
+    private ArrayList<ArrayList<String>> mEditedAndDeletedFactors;
+    private boolean mDeleteEditedFactors = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,39 +79,29 @@ public class SettingsActivity extends AppCompatActivity implements SettingsDialo
 
     /** Called when the user clicks the save button */
     public void save(View view) {
-        List<String> titles = getEditedTitles();
-        int[] diffNumbers = FactorTitleHelper.getFactorTitlesDiffNumbers(this, titles);
+        mNewTitles = getEditedTitles();
+        mEditedAndDeletedFactors = FactorTitleHelper.getEditedAndDeletedFactors(this, mNewTitles);
 
-        if (diffNumbers[1] > 0) {
-            // factor names were edited (and maybe also added)
-            String question = getString(R.string.settings_question_edited) + " " + diffNumbers[1] + " " + getString(R.string.settings_question_factor_names);
+        if (mEditedAndDeletedFactors.get(0).size() > 0) {
+            // factor names were edited -> ask if values should be deleted
+            String question = getString(R.string.settings_question_edited) + " " + mEditedAndDeletedFactors.get(0).size() + " " + getString(R.string.settings_question_factor_names);
             question += " " + getString(R.string.setting_question_delete_or_rename);
             DialogFragment dialog = SettingsDialog.newInstance(question);
             dialog.show(getSupportFragmentManager(), "settings confirm");
-        } else if(diffNumbers[0] > 0) {
-            // factor names were only added
-            storeTitlesAndFinish(titles);
         } else {
-            // nothing changed
-            Toast toast = Toast.makeText(this, R.string.settings_nothing_changed, Toast.LENGTH_SHORT);
-            toast.show();
-            finish();
+            persistAndFinish();
         }
     }
 
     @Override
     public void onDialogDeleteClick(DialogFragment dialog) {
-        List<String> titles = getEditedTitles();
-        // delete values of modified factors
-        // TODO
-        // store new titles
-        storeTitlesAndFinish(titles);
+        mDeleteEditedFactors = true;
+        persistAndFinish();
     }
 
     @Override
     public void onDialogRenameClick(DialogFragment dialog) {
-        // only store new titles
-        storeTitlesAndFinish(getEditedTitles());
+        persistAndFinish();
     }
 
     private List<String> getEditedTitles() {
@@ -121,10 +115,22 @@ public class SettingsActivity extends AppCompatActivity implements SettingsDialo
         return titles;
     }
 
-    private void storeTitlesAndFinish(List<String> titles) {
-        FactorTitleHelper.setFactorTitles(this, titles);
+    private void persistAndFinish() {
+        // delete values if needed
+        if (mDeleteEditedFactors) {
+            for(int i = 0; i < mEditedAndDeletedFactors.get(0).size(); i++) {
+                Util.deleteColumn(this, mEditedAndDeletedFactors.get(0).get(i));
+            }
+        }
+        for(int i = 0; i < mEditedAndDeletedFactors.get(1).size(); i++) {
+            Util.deleteColumn(this, mEditedAndDeletedFactors.get(1).get(i));
+        }
+
+        // persist new titles
+        FactorTitleHelper.setFactorTitles(this, mNewTitles);
         Toast toast = Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_SHORT);
         toast.show();
+
         finish();
     }
 }

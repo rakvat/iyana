@@ -26,24 +26,25 @@ public class FactorTitleHelper {
         return titles;
     }
 
-    public static int[] getFactorTitlesDiffNumbers(Activity context, List<String> titles) {
-        int newTitles = 0;
-        int editedTitles = 0;
-        int deletedTitles = 0;
+    public static ArrayList<ArrayList<String>> getEditedAndDeletedFactors(Activity context, List<String> titles) {
+        ArrayList<ArrayList<String>> editedAndDeleted = new ArrayList<ArrayList<String>>();
+        ArrayList<String> editedFactors = new ArrayList<String>();
+        ArrayList<String> deletedFactors = new ArrayList<String>();
         List<String> oldTitles = getFactorTitles(context);
         for (int i = 0; i < MAX_FACTORS; i++) {
             if (titles.get(i) != null && titles.get(i).length() > 0) {
                 if (oldTitles.get(i) == null || oldTitles.get(i).length() == 0) {
-                    newTitles += 1;
+                    // new titles
                 } else if (!titles.get(i).equals(oldTitles.get(i))) {
-                    editedTitles += 1;
+                    editedFactors.add(DatabaseContract.MoodEntry.FACTOR_COLUMNS[i]);
                 }
             } else if (oldTitles.get(i) != null && oldTitles.get(i).length() > 0) {
-                deletedTitles += 1;
+                deletedFactors.add(DatabaseContract.MoodEntry.FACTOR_COLUMNS[i]);
             }
         }
-        int[] diffNumbers = { newTitles, editedTitles, deletedTitles };
-        return diffNumbers;
+        editedAndDeleted.add(editedFactors);
+        editedAndDeleted.add(deletedFactors);
+        return editedAndDeleted;
     }
 
     public static void setFactorTitles(Activity context, List<String> titles) {
