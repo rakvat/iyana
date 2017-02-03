@@ -2,6 +2,7 @@ package com.example.rakvat.iyana;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import static android.view.View.GONE;
+import static com.example.rakvat.iyana.Util.COLORS;
 
 
 public class DiaryActivity extends AppCompatActivity {
@@ -151,8 +153,8 @@ public class DiaryActivity extends AppCompatActivity {
             for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
                 if (titles.get(i) != null && titles.get(i).length() > 0) {
                     inflateRow(inflater, rowView, cursor,
-                            DatabaseContract.MoodEntry.FACTOR_COLUMNS[i],
-                            Util.capitalize(titles.get(i)));
+                               DatabaseContract.MoodEntry.FACTOR_COLUMNS[i],
+                               Util.capitalize(titles.get(i)), i);
                 }
             }
             rowView.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MoodEntry._ID)));
@@ -164,18 +166,26 @@ public class DiaryActivity extends AppCompatActivity {
         }
     }
 
-
     private void inflateRow(LayoutInflater inflater, View rowView, Cursor cursor, String dbId, String label) {
-        int value = cursor.getInt(
-                cursor.getColumnIndexOrThrow(dbId));
+        inflateRow(inflater, rowView, cursor, dbId, label, -1);
+    }
+
+    private void inflateRow(LayoutInflater inflater, View rowView, Cursor cursor, String dbId, String label, int index) {
+        int color = Color.BLACK;
+        if (index != -1) {
+            color = Util.COLORS[index];
+        }
+        int value = cursor.getInt(cursor.getColumnIndexOrThrow(dbId));
         if (value != 0) {
             ViewGroup rowParent = (ViewGroup) rowView.findViewById(R.id.diary_row_entries);
             View rowEntryView = inflater.inflate(R.layout.diary_row_entry, null);
             TextView labelView = (TextView) rowEntryView.findViewById(R.id.label);
             labelView.setText(label);
+            labelView.setTextColor(color);
 
             TextView valueView = (TextView) rowEntryView.findViewById(value2ViewIdMap.get(value));
             valueView.setVisibility(View.VISIBLE);
+            valueView.setTextColor(color);
 
             rowParent.addView(rowEntryView);
         }
