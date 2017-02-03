@@ -2,6 +2,7 @@ package com.example.rakvat.iyana;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         Util.setTitleBar(this, R.string.nav_settings);
+        
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setFactorTitles();
     }
 
@@ -61,8 +65,9 @@ public class SettingsActivity extends AppCompatActivity {
                 R.id.factor8, R.id.factor9 };
         List<String> titles = FactorTitleHelper.getFactorTitles(this);
         for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+            EditText editText = (EditText) findViewById(view_ids[i]);
+            editText.setTextColor(Util.COLORS[i]);
             if (titles.get(i).length() > 0) {
-                EditText editText = (EditText) findViewById(view_ids[i]);
                 editText.setText(titles.get(i));
             }
         }

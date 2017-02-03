@@ -23,6 +23,7 @@
                 android:nextFocusDown="@+id/factor1"
                 android:imeOptions="actionNext"
                 android:hint="@string/settings_factor_hint" />
+
             <EditText android:id="@+id/factor1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

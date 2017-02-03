@@ -8,7 +8,8 @@
     <string name="nav_settings">Settings</string>
     <string name="nav_enter_data">Enter Data</string>
     <string name="settings_title">Settings</string>
-    <string name="settings_help">You can select up to 10 factors that you want to track every day.
+    <string name="settings_help">You can enter up to 10 factors that you want to track every day.
+        Mood will be tracked in any case - no need to enter that one.
         You should choose factors that you think might have an influence on your mood or be influenced by your mood.\n
         \n
         The factors should be trackable by entering values from good to bad (++, +, +-, -, --).\n
