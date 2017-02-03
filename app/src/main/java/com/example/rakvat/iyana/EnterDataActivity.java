@@ -3,6 +3,7 @@ package com.example.rakvat.iyana;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,9 +25,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static android.R.attr.value;
 import static com.example.rakvat.iyana.R.id.note;
 
 public class EnterDataActivity extends AppCompatActivity {
@@ -63,6 +67,8 @@ public class EnterDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_data);
         Util.setTitleBar(this, R.string.nav_enter_data);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         Bundle b = getIntent().getExtras();
         if (b != null) {
@@ -175,6 +181,11 @@ public class EnterDataActivity extends AppCompatActivity {
     private void inflateEnterValue(LayoutInflater inflater, ViewGroup parent, String title, int id, Cursor cursor) {
         View rowView = inflater.inflate(R.layout.enter_data_row, null);
         TextView label = (TextView) rowView.findViewById(R.id.label);
+        int color = Color.BLACK;
+        if (id != MOOD_ID) {
+            color = Util.COLORS[id];
+        }
+        label.setTextColor(color);
         label.setText(title);
         rowView.setId(id);
         if (cursor != null) {
