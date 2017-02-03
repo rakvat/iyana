@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.R.id.message;
@@ -23,6 +24,26 @@ public class FactorTitleHelper {
             titles.add(sharedPref.getString(context.getString(R.string.factor_storage_key) + i, ""));
         }
         return titles;
+    }
+
+    public static int[] getFactorTitlesDiffNumbers(Activity context, List<String> titles) {
+        int newTitles = 0;
+        int editedTitles = 0;
+        int deletedTitles = 0;
+        List<String> oldTitles = getFactorTitles(context);
+        for (int i = 0; i < MAX_FACTORS; i++) {
+            if (titles.get(i) != null && titles.get(i).length() > 0) {
+                if (oldTitles.get(i) == null || oldTitles.get(i).length() == 0) {
+                    newTitles += 1;
+                } else if (!titles.get(i).equals(oldTitles.get(i))) {
+                    editedTitles += 1;
+                }
+            } else if (oldTitles.get(i) != null && oldTitles.get(i).length() > 0) {
+                deletedTitles += 1;
+            }
+        }
+        int[] diffNumbers = { newTitles, editedTitles, deletedTitles };
+        return diffNumbers;
     }
 
     public static void setFactorTitles(Activity context, List<String> titles) {

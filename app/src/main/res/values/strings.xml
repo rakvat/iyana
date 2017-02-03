@@ -16,7 +16,10 @@
         \n
         Examples are weather, sleep, sports, food, completed daily plan, meditation. You could also
         add menstruation if you think it might have an influence on your mood. In that case you could
-        skip that question most of the days and only answer it when you get your period.
+        skip that question most of the days and only answer it when you get your period.\n
+        \n
+        When you edit factor names, you will be asked if the values that were already recorded for that
+        factor should be deleted or if you want to keep them and only rename the factor.
     </string>
     <string name="settings_save">Save</string>
     <string name="settings_factor_hint">enter factor title</string>
@@ -35,9 +38,9 @@
         \n
         It might help to write down some notes with your definition for ++, +, +-, -, -- for mood and other factors. That way your answers can get more consistant.
     </string>
-    <string name="enter_data_save">save</string>
-    <string name="settings_saved">saved</string>
-    <string name="data_saved">saved</string>
+    <string name="enter_data_save">Save</string>
+    <string name="settings_saved">Saved</string>
+    <string name="data_saved">Saved</string>
     <string name="enter_data_note_label">Note (e.g. special events that influenced your mood)</string>
     <string name="enter_data_note">Note</string>
     <string name="enter_data_mood_label">Mood</string>
@@ -143,4 +146,11 @@
     <string name="todo">todo</string>
     <string name="nav_back">Back</string>
     <string name="nav_forward">Forward</string>
+    <string name="settings_confirm_delete">Delete Values</string>
+    <string name="settings_confirm_rename">Rename Factors</string>
+    <string name="settings_cancel">Cancel</string>
+    <string name="settings_nothing_changed">Nothing Changed</string>
+    <string name="settings_question_edited">You edited</string>
+    <string name="settings_question_factor_names">factor name(s).</string>
+    <string name="setting_question_delete_or_rename">Should the values of those factors be deleted or do you only want to rename the factors?</string>
 </resources>
