@@ -134,7 +134,8 @@
     <string name="help_ok">Ok</string>
     <string name="data_mood_required">Please enter your mood.</string>
     <string name="nav_diary">Diary</string>
-    <string name="diary_data_help">TODO</string>
+    <string name="diary_data_help">The Diary view allows you to show your data and notes of the past days. You can move through the data by pressing the buttons at the bottom of the list.
+        It is also possible to edit and delete previous entries if you made a mistake and want to correct it.</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="entry_deleted">Entry Deleted</string>
