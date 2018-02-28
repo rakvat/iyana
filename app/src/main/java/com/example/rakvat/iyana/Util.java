@@ -2,7 +2,6 @@ package com.example.rakvat.iyana;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -10,9 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.Date;
-
-import static android.R.attr.name;
-import static android.R.attr.offset;
 
 public class Util {
 
@@ -143,15 +139,11 @@ public class Util {
         db.update(DatabaseContract.MoodEntry.TABLE_NAME, values, null, selectionArgs);
     }
 
-    private static String getCurrentDBName(Context context) {
-        SharedPreferences sharedPref =
-                context.getSharedPreferences(context.getString(R.string.demo_mode_preference),
-                        Context.MODE_PRIVATE);
-        if (sharedPref.getBoolean(context.getString(R.string.demo_mode_key), false)) {
+    public static String getCurrentDBName(Context context) {
+        if (PreferencesHelper.getDemoMode(context)) {
             return DatabaseContract.DEMO_DATABASE_NAME;
         } else {
             return DatabaseContract.DATABASE_NAME;
         }
     }
-
 }

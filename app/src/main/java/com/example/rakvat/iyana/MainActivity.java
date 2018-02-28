@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Util.setTitleBar(this, R.string.app_name);
+
+        if (!PreferencesHelper.getAfterInstall(this)) {
+            DemoData.initialize(this);
+        }
     }
 
     @Override

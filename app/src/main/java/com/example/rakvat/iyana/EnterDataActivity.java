@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +24,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static android.R.attr.value;
-import static com.example.rakvat.iyana.R.id.note;
+
 
 public class EnterDataActivity extends AppCompatActivity {
 
@@ -129,7 +126,7 @@ public class EnterDataActivity extends AppCompatActivity {
 
     /** Called when the user clicks the save button */
     public void save(View view) {
-        DatabaseHelper dbHelper = new DatabaseHelper(this, DatabaseContract.DATABASE_NAME);
+        DatabaseHelper dbHelper = new DatabaseHelper(this, Util.getCurrentDBName(this));
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();

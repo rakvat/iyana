@@ -1,26 +1,22 @@
 package com.example.rakvat.iyana;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
+
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.duration;
-import static android.R.id.message;
+
 
 public class SettingsActivity extends AppCompatActivity implements SettingsDialog.NoticeDialogListener {
 

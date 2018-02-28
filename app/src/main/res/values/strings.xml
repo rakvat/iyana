@@ -12,8 +12,9 @@
     <string name="settings_save">Save</string>
     <string name="settings_factor_hint">enter factor title</string>
     <string name="factor_storage_key">com.example.rakvat.IYANA.FACTOR_STORAGE_KEY</string>
-    <string name="demo_mode_preference">com.example.rakvat.IYANA.DEMO_PREFERENCE_STORAGE_KEY</string>
+    <string name="preferences">com.example.rakvat.IYANA.DEMO_PREFERENCE_STORAGE_KEY</string>
     <string name="demo_mode_key">com.example.rakvat.IYANA.DEMO_PREFERENCE_KEY</string>
+    <string name="started_before_key">com.example.rakvat.IYANA.STARTED_BEFORE_KEY</string>
     <string name="enter_data_title">Enter Data</string>
     <string name="enter_data_help">Here you can enter your current mood and the other factors you wanted to track. You can add more factors or change them by going to Settings.\n\n++ means very good\n+ means good\n+- means neutral, neither good nor bad\n- means bad\n-- means very bad\n\nYou do not have to answer every row each time.\n\nIt might help to write down some notes with your definition for ++, +, +-, -, -- for mood and other factors. That way your answers can get more consistant.</string>
     <string name="enter_data_save">Save</string>

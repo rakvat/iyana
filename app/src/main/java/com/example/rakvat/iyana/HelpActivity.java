@@ -20,12 +20,13 @@ public class HelpActivity  extends AppCompatActivity {
         Util.setTitleBar(this, R.string.nav_help);
 
         Switch s = (Switch) findViewById(R.id.helpDemoSwitch);
+        final Context context = this;
         if (s != null) {
-            s.setChecked(getDemoMode());
+            s.setChecked(PreferencesHelper.getDemoMode(context));
             s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    setDemoMode(buttonView.isChecked());
+                    PreferencesHelper.setDemoMode(context, buttonView.isChecked());
                 }
             });
         }
@@ -48,21 +49,5 @@ public class HelpActivity  extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private boolean getDemoMode() {
-        SharedPreferences sharedPref =
-                this.getSharedPreferences(this.getString(R.string.demo_mode_preference),
-                        Context.MODE_PRIVATE);
-        return sharedPref.getBoolean(this.getString(R.string.demo_mode_key), false);
-    }
-
-    private void setDemoMode(boolean flag) {
-        SharedPreferences sharedPref =
-                this.getSharedPreferences(this.getString(R.string.demo_mode_preference),
-                        Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(this.getString(R.string.demo_mode_key), flag);
-        editor.commit();
     }
 }
