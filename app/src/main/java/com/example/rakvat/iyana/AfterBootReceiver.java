@@ -24,7 +24,7 @@ public class AfterBootReceiver extends BroadcastReceiver {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
 
         Intent notificationIntent = new Intent(context, NotificationPublisher.class);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
@@ -35,7 +35,7 @@ public class AfterBootReceiver extends BroadcastReceiver {
         alarmManager.setInexactRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.getTimeInMillis(),
-            AlarmManager.INTERVAL_DAY, pendingIntent);
+            AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
     }
 
     private boolean needsNotification() {

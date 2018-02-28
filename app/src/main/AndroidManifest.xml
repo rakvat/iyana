@@ -22,9 +22,10 @@
         <activity android:name=".MoodChartActivity" />
         <activity android:name=".DiaryActivity" />
 
-        <receiver android:name=".AfterBootReceiver" android:enabled="true">
+        <receiver android:name=".AfterBootReceiver" android:enabled="true" android:exported="true">
             <intent-filter>
-                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
         <receiver android:name=".NotificationPublisher" />
