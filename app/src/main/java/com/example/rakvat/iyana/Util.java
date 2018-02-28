@@ -2,6 +2,7 @@ package com.example.rakvat.iyana;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -69,7 +70,7 @@ public class Util {
     }
 
     public static Cursor getDBData(Context context, int fromDaysBeforeNow, int toDaysBeforeNow, boolean asc) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        DatabaseHelper dbHelper = new DatabaseHelper(context, getCurrentDBName(context));
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         String selection = "";
@@ -105,7 +106,7 @@ public class Util {
     }
 
     public static Cursor getDBRow(Context context, int dbRow) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        DatabaseHelper dbHelper = new DatabaseHelper(context, getCurrentDBName(context));
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         String selection = DatabaseContract.MoodEntry._ID + " = ?";
@@ -125,7 +126,7 @@ public class Util {
 
     public static void deleteRow(Context context, int dbRow)
     {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        DatabaseHelper dbHelper = new DatabaseHelper(context, getCurrentDBName(context));
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(DatabaseContract.MoodEntry.TABLE_NAME,
                 DatabaseContract.MoodEntry._ID + "=" + Integer.toString(dbRow), null);
@@ -133,13 +134,24 @@ public class Util {
 
     public static void deleteColumn(Context context, String dbColumn)
     {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        DatabaseHelper dbHelper = new DatabaseHelper(context, getCurrentDBName(context));
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(dbColumn, "");
         String[] selectionArgs = { };
         db.update(DatabaseContract.MoodEntry.TABLE_NAME, values, null, selectionArgs);
+    }
+
+    private static String getCurrentDBName(Context context) {
+        SharedPreferences sharedPref =
+                context.getSharedPreferences(context.getString(R.string.demo_mode_preference),
+                        Context.MODE_PRIVATE);
+        if (sharedPref.getBoolean(context.getString(R.string.demo_mode_key), false)) {
+            return DatabaseContract.DEMO_DATABASE_NAME;
+        } else {
+            return DatabaseContract.DATABASE_NAME;
+        }
     }
 
 }

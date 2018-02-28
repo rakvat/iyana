@@ -129,7 +129,7 @@ public class EnterDataActivity extends AppCompatActivity {
 
     /** Called when the user clicks the save button */
     public void save(View view) {
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        DatabaseHelper dbHelper = new DatabaseHelper(this, DatabaseContract.DATABASE_NAME);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();

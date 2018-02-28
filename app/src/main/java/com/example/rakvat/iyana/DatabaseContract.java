@@ -7,8 +7,8 @@ public final class DatabaseContract {
 
     public static final  int    DATABASE_VERSION   = 1;
     public static final  String DATABASE_NAME      = "database.db";
-    private static final String TEXT_TYPE          = " TEXT";
-    private static final String COMMA_SEP          = ",";
+    public static final  String DEMO_DATABASE_NAME      = "demo_database.db";
+
 
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.

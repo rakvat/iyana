@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public DatabaseHelper(Context context) {
-        super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
+    public DatabaseHelper(Context context, String database) {
+        super(context, database, null, DatabaseContract.DATABASE_VERSION);
     }
 
     // Method is called during creation of the database
