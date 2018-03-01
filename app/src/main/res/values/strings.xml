@@ -47,4 +47,6 @@
     <string name="settings_question_factor_names">factor name(s).</string>
     <string name="setting_question_delete_or_rename">Should the values of those factors be deleted or do you only want to rename the factors?</string>
     <string name="demo_data">Use Demo Data</string>
+    <string name="demo_mode_off">no</string>
+    <string name="demo_mode_on">yes</string>
 </resources>

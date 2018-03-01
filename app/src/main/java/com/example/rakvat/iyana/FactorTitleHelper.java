@@ -46,8 +46,8 @@ public class FactorTitleHelper {
         return editedAndDeleted;
     }
 
-    public static void setFactorTitles(Context context, List<String> titles) {
-        String demoMode = PreferencesHelper.getDemoMode(context) ? "demo" : "";
+    public static void setFactorTitles(Context context, List<String> titles, boolean pDemoMode) {
+        String demoMode = pDemoMode ? "demo" : "";
         SharedPreferences sharedPref =
                 context.getSharedPreferences(context.getString(R.string.factor_storage_key),
                         Context.MODE_PRIVATE);
@@ -58,5 +58,9 @@ public class FactorTitleHelper {
             }
         }
         editor.commit();
+    }
+
+    public static void setFactorTitles(Context context, List<String> titles) {
+        setFactorTitles(context, titles, PreferencesHelper.getDemoMode(context));
     }
 }
