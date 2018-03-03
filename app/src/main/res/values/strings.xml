@@ -51,4 +51,5 @@
     <string name="demo_mode_on">yes</string>
     <string name="nav_correlation_graph">Correlation</string>
     <string name="nav_correlation_graphs">Correlation Charts</string>
+    <string name="correlation_chart_help">The more data you collect, the more sense these graphs will make. They will show how individual factors influence your mood.</string>
 </resources>
