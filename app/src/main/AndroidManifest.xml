@@ -20,6 +20,7 @@
         <activity android:name=".TimeChartActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".MoodChartActivity" />
+        <activity android:name=".CorrelationChartActivity" />
         <activity android:name=".DiaryActivity" />
 
         <receiver android:name=".AfterBootReceiver" android:enabled="true" android:exported="true">

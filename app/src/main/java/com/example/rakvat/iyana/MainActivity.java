@@ -1,27 +1,13 @@
 package com.example.rakvat.iyana;
 
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.Calendar;
-
-import static android.R.attr.delay;
-import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
-import static android.content.Context.ALARM_SERVICE;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -69,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mood_charts:
                 showMoodCharts();
                 return true;
+            case R.id.correlation_charts:
+                showCorrelationCharts();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -81,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMoodCharts() {
         Intent intent = new Intent(this, MoodChartActivity.class);
+        startActivity(intent);
+    }
+
+    private void showCorrelationCharts() {
+        Intent intent = new Intent(this, CorrelationChartActivity.class);
         startActivity(intent);
     }
 
