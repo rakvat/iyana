@@ -9,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.R.attr.x;
-
 
 // from https://github.com/PhilJay/MPAndroidChart/issues/789
 public class DateAxisValueFormatter implements IAxisValueFormatter

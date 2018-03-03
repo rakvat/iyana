@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +17,13 @@ import java.util.List;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
+
 
 
 public class CorrelationChartActivity extends AppCompatActivity {
@@ -54,14 +59,31 @@ public class CorrelationChartActivity extends AppCompatActivity {
             }
         }
 
+        List<Float> stdDeviation = new ArrayList<Float>();
+        stdDeviation.add(getStdDeviation(moodEntries, means.get(0)));
+        for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+            if (titles.get(i) != null) {
+                stdDeviation.add(getStdDeviation(entries.get(i), means.get(i+1)));
+            }
+        }
+
+        // Pearson_correlation_coefficient
+        List<Float> correlation = new ArrayList<Float>();
+        for (int i = 0; i < FactorTitleHelper.MAX_FACTORS; i++) {
+            if (titles.get(i) != null) {
+                correlation.add(getCorrelation(covariance.get(i), stdDeviation.get(0), stdDeviation.get(i+1)));
+            }
+        }
+
         List<BarEntry> barEntries = new ArrayList<BarEntry>();
         int counter = 0;
-        for (Float f : covariance) {
+        // for testing you can plugin means, covariance, stdDeviation in here
+        for (Float f : correlation) {
             barEntries.add(new BarEntry(counter, f == null ? 0 : f));
             counter += 1;
         }
         setBarChartData(chart, titles, barEntries);
-        styleChart(chart);
+        styleChart(chart, titles);
         chart.invalidate(); // refresh
     }
 
@@ -88,18 +110,32 @@ public class CorrelationChartActivity extends AppCompatActivity {
 
 
     private void setBarChartData(Chart chart, List<String> titles, List<BarEntry> entries) {
-        BarDataSet set = new BarDataSet(entries, "Correlation with Mood");
+        BarDataSet set = new BarDataSet(entries, "Correlation of Factors with Mood");
         set.setColors(Util.COLORS);
         BarData data = new BarData(set);
         data.setBarWidth(0.9f); // set custom bar width
         chart.setData(data);
     }
 
-    private void styleChart(BarChart chart) {
+    private void styleChart(BarChart chart, List<String> titles) {
         // Hide the description
         Description d = new Description();
         d.setText("");
         chart.setDescription(d);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawLabels(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        YAxis right = chart.getAxisRight();
+        right.setDrawLabels(false);
+        right.setDrawAxisLine(true);
+        right.setDrawGridLines(false);
+
+        Legend legend = chart.getLegend();
+        legend.setWordWrapEnabled(true);
+        legend.setExtra(Util.COLORS, titles.toArray(new String[0]));
     }
 
     private Float getMean(List<Integer> values) {
@@ -118,9 +154,25 @@ public class CorrelationChartActivity extends AppCompatActivity {
         return ((float)acc)/n;
     }
 
+    private Float getStdDeviation(List<Integer> values, Float mean) {
+        int n = 0;
+        float acc = 0;
+        for (Integer i : values) {
+            if (i != null) {
+                n += 1;
+                acc += Math.pow(i - mean, 2);
+            }
+        }
+
+        if (n <= 1) {
+            return null;
+        }
+        return (float)(Math.sqrt(acc/(float)(n-1)));
+    }
+
     private Float getCovariance(List<Integer> xs, Float xMean, List<Integer> ys, Float yMean) {
         int n = 0;
-        int acc = 0;
+        float acc = 0;
         for (int i = 0; i < xs.size(); i++) {
             if (xs.get(i) != null && ys.get(i) != null) {
                 acc += (xs.get(i) - xMean) * (ys.get(i) - yMean);
@@ -131,6 +183,13 @@ public class CorrelationChartActivity extends AppCompatActivity {
             return null;
         }
         return (1/(float)(n-1)) * acc;
+    }
+
+    private Float getCorrelation(Float covariance, Float xStdDeviation, Float yStdDeviation) {
+        if (covariance == null || xStdDeviation == null || yStdDeviation == null) {
+            return null;
+        }
+        return covariance/(xStdDeviation * yStdDeviation);
     }
 
     @Override
