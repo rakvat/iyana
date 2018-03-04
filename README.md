@@ -23,3 +23,11 @@ The mindset behind this app is different:
 ### A Better World?
 
 Is there alternative? Is that even possible? You can find more thoughts about the transformation into societies with less pressure and less injustice and less mental issues here http://transform-social.org.
+
+
+## Screenshots
+
+![correlation](https://user-images.githubusercontent.com/891721/36938289-77c0a4a0-1ed4-11e8-9098-3540419a1a68.png)
+![diary](https://user-images.githubusercontent.com/891721/36938290-77dc5628-1ed4-11e8-9785-00fecceec1ae.png)
+![mood](https://user-images.githubusercontent.com/891721/36938291-77faeae8-1ed4-11e8-85ba-999cd4c33982.png)
+![time](https://user-images.githubusercontent.com/891721/36938292-78165134-1ed4-11e8-9d7e-b54834fb1803.png)
