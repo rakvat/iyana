@@ -78,10 +78,8 @@ public class CorrelationChartActivity extends AppCompatActivity {
         int counter = 0;
         // for testing you can plugin means, covariance, stdDeviation in here
         for (Float f : correlation) {
-            if (f != null) {
-                barEntries.add(new BarEntry(counter, f));
-                counter += 1;
-            }
+            barEntries.add(new BarEntry(counter, f == null ? 0 : f));
+            counter += 1;
         }
         setBarChartData(chart, titles, barEntries);
         styleChart(chart, titles);
@@ -199,7 +197,7 @@ public class CorrelationChartActivity extends AppCompatActivity {
     }
 
     private Float getCorrelation(Float covariance, Float xStdDeviation, Float yStdDeviation) {
-        if (covariance == null || xStdDeviation == null || yStdDeviation == null) {
+        if (covariance == null || xStdDeviation == null || yStdDeviation == null || xStdDeviation * yStdDeviation == 0) {
             return null;
         }
         return covariance/(xStdDeviation * yStdDeviation);
